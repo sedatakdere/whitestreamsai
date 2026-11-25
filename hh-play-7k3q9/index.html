@@ -250,7 +250,7 @@ button:disabled{cursor:default}
 .b.joy:not(.land){animation:hop .5s ease-in-out}@keyframes hop{40%{transform:translateY(-4px)}}
 
 /* ---------- obstacles: ice, vine, web, crow ---------- */
-.b.ice svg{filter:saturate(.45) brightness(1.08) hue-rotate(-8deg)}
+.b.ice svg{filter:saturate(.95) brightness(1.04)}
 .b.ice::after{content:"";position:absolute;inset:2% 4% 4%;border-radius:32%;z-index:2;pointer-events:none;
  background:linear-gradient(140deg,rgba(235,250,255,.78) 0%,rgba(170,220,255,.32) 38%,rgba(140,200,250,.22) 60%,rgba(220,245,255,.62) 100%);
  border:2px solid rgba(240,252,255,.92);box-shadow:inset 0 0 10px rgba(255,255,255,.75),0 0 12px rgba(150,215,255,.65)}
@@ -295,7 +295,7 @@ button:disabled{cursor:default}
 
 /* thick & cracked ice, missions */
 .b.ice.thick::after{border:3px solid rgba(225,245,255,.95);background:linear-gradient(140deg,rgba(225,245,255,.86) 0%,rgba(150,205,255,.5) 40%,rgba(120,185,245,.42) 62%,rgba(210,240,255,.75) 100%);box-shadow:inset 0 0 14px rgba(255,255,255,.85),0 0 16px rgba(140,205,255,.8)}
-.b.ice.thick svg{filter:saturate(.3) brightness(1.12) hue-rotate(-10deg)}
+.b.ice.thick svg{filter:saturate(.9) brightness(1.04)}
 .b.ice.crk::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l-3 9 5 4-6 7 4 6-3 8M17 12l-8 3M22 16l9-2M16 23l-9 4M20 29l8 4' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' opacity='.95'/%3E%3C/svg%3E"),linear-gradient(140deg,rgba(225,245,255,.7) 0%,rgba(150,205,255,.35) 45%,rgba(210,240,255,.6) 100%);background-size:100% 100%}
 .b.nope{animation:nope .4s ease-in-out}
 .mis{position:relative;z-index:2;display:flex;align-items:center;gap:7px;width:max-content;max-width:92%;margin:6px auto 0;padding:5px 12px 5px 8px;border-radius:99px;background:rgba(18,14,30,.62);color:#FFF1D6;font:600 13.5px/1.2 "Fredoka",sans-serif;box-shadow:inset 0 0 0 1.5px rgba(255,214,120,.35)}
@@ -321,6 +321,12 @@ button:disabled{cursor:default}
 .fly-owl{transform-origin:50% 50%;filter:drop-shadow(0 8px 10px rgba(0,0,0,.5))}
 .fly-owl .ow-l{animation:owL .12s ease-in-out infinite alternate}.fly-owl .ow-r{animation:owR .12s ease-in-out infinite alternate}
 .fly-owl.hooting .oe{transform:scale(1.15)}
+
+/* clearer ice: frosty edges, see-through middle so the bird's colour reads */
+.b.ice::after{background:radial-gradient(ellipse 62% 58% at 50% 54%,rgba(210,240,255,.04) 0 55%,rgba(185,228,255,.38) 80%,rgba(230,248,255,.72) 100%)}
+.b.ice.thick::after{background:radial-gradient(ellipse 60% 56% at 50% 54%,rgba(210,240,255,.06) 0 52%,rgba(170,220,255,.5) 78%,rgba(230,248,255,.85) 100%)}
+.b.ice.crk::after{background-image:var(--crk),radial-gradient(ellipse 60% 56% at 50% 54%,rgba(210,240,255,.06) 0 52%,rgba(170,220,255,.45) 78%,rgba(230,248,255,.8) 100%)}
+.b.ice.crk::after{--crk:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l-3 9 5 4-6 7 4 6-3 8M17 12l-8 3M22 16l9-2M16 23l-9 4M20 29l8 4' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' opacity='.95'/%3E%3C/svg%3E")}
 
 </style>
 </head>
