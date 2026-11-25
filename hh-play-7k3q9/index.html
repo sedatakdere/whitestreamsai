@@ -328,6 +328,10 @@ button:disabled{cursor:default}
 .b.ice.crk::after{background-image:var(--crk),radial-gradient(ellipse 60% 56% at 50% 54%,rgba(210,240,255,.06) 0 52%,rgba(170,220,255,.45) 78%,rgba(230,248,255,.8) 100%)}
 .b.ice.crk::after{--crk:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3l-3 9 5 4-6 7 4 6-3 8M17 12l-8 3M22 16l9-2M16 23l-9 4M20 29l8 4' fill='none' stroke='white' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' opacity='.95'/%3E%3C/svg%3E")}
 
+/* dotted capital I for the Turkish display font */
+.iw{white-space:nowrap}.ii{position:relative;display:inline-block}
+.ii::after{content:"";position:absolute;left:50%;top:-.16em;width:.26em;height:.26em;margin-left:-.13em;border-radius:50%;background:currentColor;box-shadow:0 0 0 .055em rgba(42,18,4,.85)}
+
 </style>
 </head>
 <body>
@@ -743,7 +747,7 @@ function levelPicker(){if(BUSY)return;const O=$("ov"),mx=lvMax(),St=G.stars||{};
   const c=info&&info.c!=null?info.c:Math.floor(Math.random()*8);
   const O=document.createElement("div");O.id="kyj";O.className="kyj"+(boss?" boss":"");
   O.innerHTML=`${DEFS}<div class="kyj-cam"><svg width="${W}" height="${tot}" viewBox="0 0 ${W} ${tot}">${stars}${trees}<path d="${seg(a,b)}" class="kyj-road"/><path d="${seg(a,b)}" class="kyj-dots"/><path d="${seg(a,from)}" class="kyj-done"/><path d="${seg(from,to)}" class="kyj-go" id="kyj-p"/>${Array.from({length:b-a+1},(_,k)=>node(a+k)).join("")}</svg><div class="kyj-bird">${bird(c)}</div></div>
-   <div class="kyj-top"><small>${newReg?t("newRegion"):t("map").toUpperCase()} · ${t("regions")[reg%6].toUpperCase()}</small><b class="kyj-shout">${pick(t("shouts"))}</b></div>
+   <div class="kyj-top"><small>${newReg?t("newRegion"):up(t("map"))} · ${up(t("regions")[reg%6])}</small><b class="kyj-shout">${pick(t("shouts"))}</b></div>
    <div class="kyj-stamp"><small>${boss?t("master"):t("level")}</small><b>${to}</b><span>${info&&info.sub?info.sub:newReg?t("welcome",{r:t("regions")[reg%6]}):boss?t("bossSub"):pick(t("subs"))}</span>${info&&info.chips?`<i>${info.chips.map(x=>`<em>${x}</em>`).join("")}</i>`:""}</div>
    <button type="button" class="kyj-start">${t("letsFly")}</button><small class="kyj-skip">${t("tapSkip")}</small>`;
   document.body.appendChild(O);requestAnimationFrame(()=>O.classList.add("on"));
@@ -758,6 +762,14 @@ function levelPicker(){if(BUSY)return;const O=$("ov"),mx=lvMax(),St=G.stars||{};
   O.onclick=e=>{if(e.target.closest(".kyj-start")){sfx("tap");close();return;}if(!done)land();};}
 function jchips(){const c=S.cfg,ch=[];if(S.crowLv)ch.push(t("chipCrow"));if(S.vine>=0)ch.push(t("chipVine"));if(S.web>=0)ch.push(t("chipWeb"));if(S.ice&&S.ice.length)ch.push(t("chipIce"));if(c.emp===1)ch.push(t("chipOne"));if(c.cap===5)ch.push(t("chipTall"));if(c.hid)ch.push(t("chipSleepy"));ch.push(t("chipColors",{n:c.nc}),t("chipTrunks",{n:S.T.length}));return ch.slice(0,3);}
 
+
+/* ---------- Turkish capital İ: the display font has no dotted capital I, so draw the dot ourselves ---------- */
+const up=x=>lang()==="tr"?String(x).toLocaleUpperCase("tr-TR"):String(x).toUpperCase();
+function fixI(root){if(!root||!document.body)return;const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.nodeValue.indexOf("\u0130")>=0&&n.parentElement&&!n.parentElement.closest("svg,.ii")?1:2});const L=[];while(tw.nextNode())L.push(tw.currentNode);
+ L.forEach(n=>{const pe=n.parentElement;let ff="";try{ff=getComputedStyle(pe).fontFamily;}catch(e){}if(!/Titan/i.test(ff))return;const f=document.createDocumentFragment();n.nodeValue.split(/(\s+)/).forEach(w=>{if(w.indexOf("\u0130")<0){if(w)f.appendChild(document.createTextNode(w));return;}const wr=document.createElement("span");wr.className="iw";
+  w.split("\u0130").forEach((part,k)=>{if(k){const sp=document.createElement("span");sp.className="ii";sp.textContent="I";wr.appendChild(sp);}if(part)wr.appendChild(document.createTextNode(part));});f.appendChild(wr);});pe.replaceChild(f,n);});}
+let fixQ=0;function fixSoon(){if(fixQ)return;fixQ=requestAnimationFrame(()=>{fixQ=0;fixI(document.body);});}
+try{new MutationObserver(fixSoon).observe(document.documentElement,{childList:true,subtree:true,characterData:true});}catch(e){}
 
 /* ---------- boot ---------- */
 function boot(){document.documentElement.lang=lang();
