@@ -444,6 +444,7 @@ button:disabled{cursor:default}
 /* shop cards: price pill pinned to the bottom so rows line up */
 .sit{justify-content:flex-start}.sit .sp{order:0}.sit small{order:1;margin-bottom:auto;padding-bottom:4px}
 .sit .rf{order:2;margin:0 0 5px}.sit i{order:3}
+.shopov.still .card,.shopov.still .sit,.shopov.still .wfe{animation:none!important}.shopov.still .sit.arm,.shopov.still .sbig.try{animation:pop .3s cubic-bezier(.2,1.6,.4,1)!important}
 
 </style>
 </head>
@@ -788,7 +789,7 @@ function titleHTML(){const lv=lvMax(),st=Object.values(G.stars||{}).reduce((a,b)
    <a class="t-priv" href="privacy.html">${t("privacy")}</a></div>`;}
 let shopC=0,shopTry=null;
 function shop(){let O=document.querySelector(".shopov");if(!O){O=document.createElement("div");O.className="ov shopov";document.body.appendChild(O);}
- const own=G.own=G.own||{oak:1},c=shopC,w=wear(c),n=["h","f","n"].filter(k=>w[k]).length,sc=O.querySelector(".sscroll"),y=sc?sc.scrollTop:0;
+ const own=G.own=G.own||{oak:1},c=shopC,w=wear(c),n=["h","f","n"].filter(k=>w[k]).length,sc=O.querySelector(".sscroll"),y=sc?sc.scrollTop:0,pk0=O.querySelector(".spick"),px=pk0?pk0.scrollLeft:0,re=!!O.querySelector(".card");
  const sec=(title,slot)=>`<h4>${title}</h4><div class="sgrid">${Object.entries(ITEMS[slot]).map(([k,v])=>{const on=w[slot]===k,has=own[k+":"+c];
   return `<button type="button" class="sit t${v[1]}${on?" on":""}${shopTry&&shopTry.key===k+":"+c?" arm":""}" data-k="${k}" data-s="${slot}" data-p="${v[0]}"><u>${t("tier"+v[1])}</u><span class="sp">${bird(c,"",{[slot]:k})}</span><small>${t("it_"+k)}</small><i>${on?t("off"):has?t("wear"):shopTry&&shopTry.key===k+":"+c?t("buyQ")+" "+FEA+v[0]:FEA+v[0]}</i>${has?`<span class="rf" data-rf="${k+":"+c}" data-p="${v[0]}" data-s="${slot}" data-k="${k}">↩ ${t("refund",{n:Math.floor(v[0]/2)})}</span>`:""}</button>`;}).join("")}</div>`;
  const sk=`<h4>${t("trunks")}</h4><div class="sgrid">${Object.entries(SKINS).map(([k,v])=>{const on=(G.skin||"oak")===k,has=own["sk:"+k]||v[0]===0;return `<button type="button" class="sit sks${on?" on":""}${shopTry&&shopTry.key==="sk:"+k?" arm":""}" data-k="${k}" data-s="skin" data-p="${v[0]}"><span class="sp"><span class="sw" style="filter:${v[1]}"></span></span><small>${t("sk_"+k)}</small><i>${on?t("worn"):has?t("wear"):shopTry&&shopTry.key==="sk:"+k?t("buyQ")+" "+FEA+v[0]:FEA+v[0]}</i>${has&&v[0]>0?`<span class="rf" data-rf="${"sk:"+k}" data-p="${v[0]}" data-s="skin" data-k="${k}">↩ ${t("refund",{n:Math.floor(v[0]/2)})}</span>`:""}</button>`;}).join("")}</div>`;
@@ -797,7 +798,7 @@ function shop(){let O=document.querySelector(".shopov");if(!O){O=document.create
   <div class="shero"><span class="sbig${fullSet(c)?" dance":""}${shopTry&&shopTry.s!=="skin"?" try":""}">${bird(c,"joy",shopTry&&shopTry.s!=="skin"?{[shopTry.s]:shopTry.k}:null)}</span><span class="sset${n===3?" full":""}">${n===3?t("setFull"):t("setN",{n})}</span></div>
   <div class="sscroll">${sec(t("hats"),"h")}${sec(t("faces"),"f")}${sec(t("necks"),"n")}${sk}</div>
   <button type="button" class="go" id="s-x">${t("close")}</button></div>`;
- O.hidden=false;const sc2=O.querySelector(".sscroll");if(sc2)sc2.scrollTop=y;$("s-x").onclick=()=>{shopTry=null;O.remove();renderTitle();};
+ O.hidden=false;if(re){O.classList.add("still");}const sc2=O.querySelector(".sscroll");if(sc2)sc2.scrollTop=y;const pk2=O.querySelector(".spick");if(pk2)pk2.scrollLeft=px;$("s-x").onclick=()=>{shopTry=null;O.remove();renderTitle();};
  O.querySelectorAll(".pk-b").forEach(b=>b.onclick=()=>{shopC=+b.dataset.c;shopTry=null;sfx("sel");const s2=O.querySelector(".sscroll");if(s2)s2.scrollTop=0;shop();});
  O.querySelectorAll(".rf").forEach(e=>e.onclick=ev=>{ev.stopPropagation();const n=Math.floor(+e.dataset.p/2);
   if(!e.dataset.cf){e.dataset.cf=1;e.classList.add("cf");e.textContent=t("refundQ",{n});sfx("tap");setTimeout(()=>{if(e.isConnected){delete e.dataset.cf;e.classList.remove("cf");e.textContent="↩ "+t("refund",{n});}},2500);return;}
