@@ -76,9 +76,9 @@ button:disabled{cursor:default}
 @keyframes owL{to{transform:rotate(40deg)}}@keyframes owR{to{transform:rotate(-40deg)}}
 .owl.spin{animation:os .9s cubic-bezier(.3,1.3,.5,1)}@keyframes os{40%{transform:translateY(-14px) rotate(180deg)}80%{transform:translateY(-4px) rotate(360deg)}100%{transform:rotate(360deg)}}
 .sq{position:absolute;left:-70px;top:12px;width:64px;height:48px;z-index:1;opacity:0;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}.sq svg{width:100%;height:100%}
-.sq.go{animation:sq 6.5s ease-in-out forwards}
-@keyframes sq{0%{opacity:1;transform:translate(0,0)}22%{transform:translate(150px,30px)}28%{transform:translate(150px,24px)}34%{transform:translate(150px,30px)}60%{transform:translate(150px,30px) scaleX(1)}64%{transform:translate(150px,30px) scaleX(-1)}68%{transform:translate(150px,30px) scaleX(1)}100%{opacity:1;transform:translate(calc(100vw + 40px),6px)}}
-.sq.go .sq-tail{transform-origin:16px 40px;animation:tail .3s ease-in-out 18 alternate}@keyframes tail{to{transform:rotate(-12deg)}}
+.sq.run{animation:sq 6.5s ease-in-out forwards}
+@keyframes sq{0%{opacity:1;transform:translate(0,0)}22%{transform:translate(150px,30px)}28%{transform:translate(150px,24px)}34%{transform:translate(150px,30px)}60%{transform:translate(150px,30px) scaleX(1)}64%{transform:translate(150px,30px) scaleX(-1)}68%{transform:translate(150px,30px) scaleX(1)}99%{opacity:1}100%{opacity:0;transform:translate(calc(100vw + 40px),6px)}}
+.sq.run .sq-tail{transform-origin:16px 40px;animation:tail .3s ease-in-out 18 alternate}@keyframes tail{to{transform:rotate(-12deg)}}
 
 /* ---------- wood UI ---------- */
 .disc{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 45%,#F2CF98 0 26%,#DDAE6E 27% 36%,#EFC88E 37% 50%,#C99058 51% 64%,#8A5A30 65% 72%,#5E3A1C 73%);color:#3A1F0C;box-shadow:inset 0 0 0 2.5px #4A2A12,0 4px 0 #2A1608,0 10px 16px -6px rgba(0,0,0,.7);transition:transform .1s}
@@ -273,7 +273,7 @@ button:disabled{cursor:default}
 .ob-c.flap{animation:cflap .35s ease-in-out 2}@keyframes cflap{50%{transform:translateY(-8px) rotate(-8deg)}}
 .ob-c .cw-w{transform-origin:28px 29px}.ob-c.flap .cw-w,.ob-c.gone .cw-w{animation:wing .12s ease-in-out infinite alternate}@keyframes wing{to{transform:rotate(-35deg)}}
 .ob-c.gone{pointer-events:none;animation:crowOut .9s ease-in both}@keyframes crowOut{to{transform:translate(160px,-260px) rotate(15deg) scale(.6);opacity:0}}
-.ob-c .cw-t{transform-origin:16px 34px;animation:tail 2.4s ease-in-out infinite}@keyframes tail{50%{transform:rotate(8deg)}}
+.ob-c .cw-t{transform-origin:16px 34px;animation:ctail 2.4s ease-in-out infinite}@keyframes ctail{50%{transform:rotate(8deg)}}
 .tk.vined .cap,.tk.webbed .cap{filter:brightness(.8)}
 .tk.nope{animation:nope .4s ease-in-out}@keyframes nope{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 .tk.pk .cap{box-shadow:0 0 0 3px rgba(150,255,140,.95),0 0 22px 4px rgba(120,230,110,.8);animation:ok .7s ease-in-out infinite alternate}
@@ -328,7 +328,7 @@ const I18N={
   chipIce:"Frozen birds",chipCrow:"Sneaky crow",chipVine:"Vines",chipWeb:"Spider web",wood:"Woodpecker",owlB:"Owl",
   pickT:"Tap a trunk to peck it free",crowGone:"Shoo, crow!",vineGone:"The vine let go!",webGone:"The web snapped!",iceGone:"Crack!",
   lockVine:"Complete a nest to free it",iceThick:"Thick ice! Bring a bird of the same color.",iceThaw:"Warmed up!",new18:"NEW: Thick ice only melts when a bird of the same color lands on it.",new38:"NEW: Ice chains — two frozen birds in one trunk!",
-  misIce:"Free {n} frozen birds",misCrow:"Shoo the crow {n} times",misNoWood:"Win without the woodpecker",misDone:"Mission complete!",lockWeb:"{n} more moves",lockCrow:"Tap the crow!",freed:"The forest helped you!",
+  misIce:"Free {n} frozen birds",misIce1:"Free the frozen bird",misCrow:"Shoo the crow {n} times",misNoWood:"Win without the woodpecker",misDone:"Mission complete!",lockWeb:"{n} more moves",lockCrow:"Tap the crow!",freed:"The forest helped you!",
   streak:"×{n} streak",stars:"{n} stars",sound:"Sound",lang:"Language",privacy:"Privacy",home:"Home",restartA:"Restart",
   regions:["Old Oak Forest","Moonlight Lake","Misty Mountain","Cloud Hill","Starry Grove","Amber Valley"],
   shouts:["TWEET-TASTIC!","WINGS ON FIRE!","BOSS OF THE FOREST!","FEATHERS UP!","WHAT A SPEED!","THE BIRDS ADORE YOU!","NEST MASTER!","WHOOSH! NEXT!","THE TREES APPLAUD!","BEAKS DROPPED!"],
@@ -346,7 +346,7 @@ const I18N={
   chipIce:"Donmuş kuşlar",chipCrow:"Kurnaz karga",chipVine:"Sarmaşık",chipWeb:"Örümcek ağı",wood:"Ağaçkakan",owlB:"Baykuş",
   pickT:"Gagalanacak gövdeye dokun",crowGone:"Kış, karga!",vineGone:"Sarmaşık çözüldü!",webGone:"Ağ koptu!",iceGone:"Çatırt!",
   lockVine:"Çözmek için bir yuva tamamla",iceThick:"Kalın buz! Aynı renkten bir kuş getir.",iceThaw:"Isındı, çözüldü!",new18:"YENİ: Kalın buz, üstüne aynı renk kuş konunca erir.",new38:"YENİ: Buz zinciri! Aynı gövdede iki donmuş kuş.",
-  misIce:"{n} donmuş kuşu kurtar",misCrow:"Kargayı {n} kez kaçır",misNoWood:"Ağaçkakansız bitir",misDone:"Görev tamam!",lockWeb:"{n} hamle kaldı",lockCrow:"Kargaya dokun!",freed:"Orman sana yardım etti!",
+  misIce:"{n} donmuş kuşu kurtar",misIce1:"Donmuş kuşu kurtar",misCrow:"Kargayı {n} kez kaçır",misNoWood:"Ağaçkakansız bitir",misDone:"Görev tamam!",lockWeb:"{n} hamle kaldı",lockCrow:"Kargaya dokun!",freed:"Orman sana yardım etti!",
   streak:"×{n} seri",stars:"{n} yıldız",sound:"Ses",lang:"Dil",privacy:"Gizlilik",home:"Ana ekran",restartA:"Baştan",
   regions:["Yaşlı Meşe Ormanı","Ay Işığı Gölü","Sisli Dağ","Bulut Tepesi","Yıldız Korusu","Kehribar Vadisi"],
   shouts:["CİK CİK, EFSANE!","KANATLAR ALEV ALDI!","ORMANIN YENİ PATRONU!","TÜYLER DİKEN DİKEN!","BU NE HIZ BÖYLE?!","KUŞLAR SANA HAYRAN!","YUVA USTASI GELDİ!","PIRRR! SIRADAKİ!","AĞAÇLAR ALKIŞLIYOR!","GAGALAR ŞAŞKIN!"],
@@ -486,7 +486,7 @@ function misInc(k){if(!S.mis||S.mis.k!==k||S.mis.c>=S.mis.n)return;S.mis.c++;if(
 function misOk(){return !!S.mis&&(S.mis.k==="nowood"?!S.woodUsed:S.mis.c>=S.mis.n);}
 const MEDAL='<svg viewBox="0 0 20 24" class="medal" aria-hidden="true"><path d="M5 0h4l2 7H7zM11 0h4l-2 7H9z" fill="#E5484D"/><circle cx="10" cy="15" r="7.5" fill="#FFC83A" stroke="#9A5A10" stroke-width="1.4"/><path d="M10 10.4l1.4 2.9 3.2.4-2.3 2.2.6 3.1L10 17.5 7.1 19l.6-3.1-2.3-2.2 3.2-.4z" fill="#FFF3C4"/></svg>';
 function paintMis(){const e=$("g-mis");if(!e)return;if(!S.mis){e.hidden=true;return;}e.hidden=false;const k=S.mis.k,ok=misOk()&&k!=="nowood";
- e.className="mis"+(ok?" ok":"");e.innerHTML=`${MEDAL}<span>${t(k==="ice"?"misIce":k==="crow"?"misCrow":"misNoWood",{n:S.mis.n})}</span>${k==="nowood"?"":`<b>${Math.min(S.mis.c,S.mis.n)}/${S.mis.n}</b>`}`;}
+ e.className="mis"+(ok?" ok":"");e.innerHTML=`${MEDAL}<span>${t(k==="ice"?(S.mis.n===1?"misIce1":"misIce"):k==="crow"?"misCrow":"misNoWood",{n:S.mis.n})}</span>${k==="nowood"?"":`<b>${Math.min(S.mis.c,S.mis.n)}/${S.mis.n}</b>`}`;}
 function solved(T){return T.every(x=>!x.length||(x.length===CAP&&x.every(y=>y===x[0])));}
 function solveN(T0,lim){const seen=new Set(),key=T=>T.map(x=>x.join(",")).sort().join("|");const st=[T0.map(x=>x.slice())];let n=0;
  while(st.length){const T=st.pop();if(solved(T))return n+1;const k=key(T);if(seen.has(k))continue;seen.add(k);if(++n>lim)return -1;
@@ -553,7 +553,7 @@ const IC={snd:'<svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"
  map:'<svg viewBox="0 0 24 24"><path d="M3.5 6.5l5-2 7 2.5 5-2v13l-5 2-7-2.5-5 2z M8.5 4.5v13 M15.5 7v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'};
 let owlT=0;
 function owl(k){const o=document.querySelector("#game .owl");if(!o)return;o.classList.remove("cheer","look","spin");void o.offsetWidth;o.classList.add(k);clearTimeout(owlT);owlT=setTimeout(()=>o.classList.remove(k),k==="look"?1600:1300);if(k!=="look")sfx("hoot");}
-function squirrel(){const c=document.querySelector("#game .canopy");if(!c||document.hidden)return;let q=c.querySelector(".sq");if(!q){c.insertAdjacentHTML("beforeend",`<div class="sq">${SQ}</div>`);q=c.querySelector(".sq");}q.classList.remove("go");void q.offsetWidth;q.classList.add("go");}
+function squirrel(){const c=document.querySelector("#game .canopy");if(!c||document.hidden)return;let q=c.querySelector(".sq");if(!q){c.insertAdjacentHTML("beforeend",`<div class="sq">${SQ}</div>`);q=c.querySelector(".sq");}q.classList.remove("run");void q.offsetWidth;q.classList.add("run");}
 let sqT=0;function sqLoop(){clearTimeout(sqT);sqT=setTimeout(()=>{if(SCREEN==="game")squirrel();sqLoop();},14000+Math.random()*22000);}
 
 /* ---------- screens ---------- */
