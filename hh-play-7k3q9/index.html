@@ -305,6 +305,11 @@ button:disabled{cursor:default}
 .mis.wm{margin:10px auto 4px;animation:land .5s cubic-bezier(.3,1.6,.5,1) both}
 .lvb{position:relative}.lvm{position:absolute;right:-2px;top:-4px;width:16px;height:19px}.lvm svg{width:100%;height:100%}
 
+.lvb.lk{filter:saturate(.35) brightness(.62);cursor:default}
+.lvb.lk b{opacity:.55}.lvb.lk .lock{position:absolute;right:-3px;bottom:-3px;width:20px;height:22px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}.lvb.lk .lock svg{width:100%;height:100%}
+.lvb.lk.bs::before{content:"";position:absolute;top:-9px;left:50%;width:22px;height:13px;margin-left:-11px;background:#FFC83A;clip-path:polygon(0 100%,0 30%,25% 60%,50% 0,75% 60%,100% 30%,100% 100%)}
+.lvb.nope{animation:nope .4s ease-in-out}
+
 </style>
 </head>
 <body>
@@ -484,6 +489,7 @@ function setupObs(lv){const O=obs(lv),r=rand(lv*31337+7),T=S.T,full=T.map((x,i)=
  S.mis=S.ice.length?{k:"ice",n:S.ice.length,c:0}:O.crow?{k:"crow",n:2,c:0}:(O.vine||O.web)?{k:"nowood",n:1,c:0}:null;S.woodUsed=0;}
 function misInc(k){if(!S.mis||S.mis.k!==k||S.mis.c>=S.mis.n)return;S.mis.c++;if(S.mis.c>=S.mis.n){toast(t("misDone"));sfx("fan");}paintMis();}
 function misOk(){return !!S.mis&&(S.mis.k==="nowood"?!S.woodUsed:S.mis.c>=S.mis.n);}
+const LOCK='<svg viewBox="0 0 20 22" aria-hidden="true"><path d="M5.5 10V7a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="#5A3A1E" stroke-width="2.4" stroke-linecap="round"/><rect x="2.5" y="9.5" width="15" height="11" rx="3" fill="#C98A3A" stroke="#5A3A1E" stroke-width="1.6"/><circle cx="10" cy="14.4" r="1.7" fill="#5A3A1E"/><path d="M10 15.4v2.4" stroke="#5A3A1E" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const MEDAL='<svg viewBox="0 0 20 24" class="medal" aria-hidden="true"><path d="M5 0h4l2 7H7zM11 0h4l-2 7H9z" fill="#E5484D"/><circle cx="10" cy="15" r="7.5" fill="#FFC83A" stroke="#9A5A10" stroke-width="1.4"/><path d="M10 10.4l1.4 2.9 3.2.4-2.3 2.2.6 3.1L10 17.5 7.1 19l.6-3.1-2.3-2.2 3.2-.4z" fill="#FFF3C4"/></svg>';
 function paintMis(){const e=$("g-mis");if(!e)return;if(!S.mis){e.hidden=true;return;}e.hidden=false;const k=S.mis.k,ok=misOk()&&k!=="nowood";
  e.className="mis"+(ok?" ok":"");e.innerHTML=`${MEDAL}<span>${t(k==="ice"?(S.mis.n===1?"misIce1":"misIce"):k==="crow"?"misCrow":"misNoWood",{n:S.mis.n})}</span>${k==="nowood"?"":`<b>${Math.min(S.mis.c,S.mis.n)}/${S.mis.n}</b>`}`;}
@@ -680,7 +686,8 @@ function stuck(){const O=$("ov");O.hidden=false;const tb=S.T.find(x=>x.length);O
   ${S.plus?`<button type="button" class="go" id="o-add">${t("addEmpty")}</button>`:""}${S.H.length&&S.undo?`<button type="button" class="go ghost" id="o-undo">${t("undoLast")}</button>`:""}<button type="button" class="go ghost" id="o-re">${t("restart")}</button></div>`;
  const c=()=>{O.hidden=true;};if($("o-add"))$("o-add").onclick=()=>{c();$("g-add").click();};if($("o-undo"))$("o-undo").onclick=()=>{c();$("g-undo").click();};$("o-re").onclick=()=>{c();$("g-re").click();};}
 function levelPicker(){if(BUSY)return;const O=$("ov"),mx=lvMax(),St=G.stars||{};O.hidden=false;
- O.innerHTML=`<div class="card pk"><small>${t("map")}</small><b class="ct">${t("choose")}</b><div class="grid">${Array.from({length:mx},(_,i)=>i+1).reverse().map(n=>`<button type="button" class="lvb${S&&n===S.lv?" on":""}${n===mx?" nw":""}" data-lv="${n}"><b>${n}</b><i>${[1,2,3].map(k=>`<s class="${k<=(St[n]||0)?"y":""}"></s>`).join("")}</i>${G.mis&&G.mis[n]?`<u class="lvm">${MEDAL}</u>`:""}</button>`).join("")}</div><button type="button" class="go ghost" id="pk-x">${t("close")}</button></div>`;
+ O.innerHTML=`<div class="card pk"><small>${t("map")}</small><b class="ct">${t("choose")}</b><div class="grid">${Array.from({length:6},(_,i)=>mx+6-i).map(n=>`<button type="button" class="lvb lk${n%10===0?" bs":""}" data-lk="${n}" aria-label="${t("levelN",{n})}"><b>${n}</b><span class="lock">${LOCK}</span></button>`).join("")}${Array.from({length:mx},(_,i)=>i+1).reverse().map(n=>`<button type="button" class="lvb${S&&n===S.lv?" on":""}${n===mx?" nw":""}" data-lv="${n}"><b>${n}</b><i>${[1,2,3].map(k=>`<s class="${k<=(St[n]||0)?"y":""}"></s>`).join("")}</i>${G.mis&&G.mis[n]?`<u class="lvm">${MEDAL}</u>`:""}</button>`).join("")}</div><button type="button" class="go ghost" id="pk-x">${t("close")}</button></div>`;
+ O.querySelectorAll("[data-lk]").forEach(b=>b.onclick=()=>{sfx("bad");b.classList.remove("nope");void b.offsetWidth;b.classList.add("nope");});
  O.querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{O.hidden=true;sfx("tap");startLevel(+b.dataset.lv);shownHv=[];paint();});$("pk-x").onclick=()=>{O.hidden=true;};}
 
  function journey(from,to,c0){const info={c:c0,chips:jchips(),sub:({7:t("new7"),11:t("new11"),15:t("new15"),18:t("new18"),21:t("new21"),25:t("new25"),28:t("new28"),33:t("new33"),38:t("new38")})[to]};document.getElementById("kyj")&&document.getElementById("kyj").remove();
