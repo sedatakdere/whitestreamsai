@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex,nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <title>Hoot Hollow · Bird Sort Puzzle</title>
 <meta name="description" content="Sort the round little birds into their oak-tree nests. A cozy night-forest puzzle with an owl who cheers you on.">
 <meta name="theme-color" content="#0B1426">
+<meta name="robots" content="noindex,nofollow">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -380,6 +380,14 @@ button:disabled{cursor:default}
 @keyframes tlow{to{transform:scale(1.04)}}
 .cbig.sunb svg{width:84px;height:84px;animation:spin 6s linear infinite}
 .lite .ob-s svg,.lite .bolt{filter:none}.lite .ob-s,.lite .ob-s .sb{animation:none}
+/* epic final move */
+.fin{position:absolute;left:0;right:0;top:20%;z-index:33;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;animation:fin 1.9s cubic-bezier(.2,1.5,.4,1) both}
+.fin small{font:400 16px/1 "Titan One",sans-serif;letter-spacing:4px;color:#2A1204;background:linear-gradient(180deg,#FFE38A,#FFB020);padding:7px 14px;border-radius:99px;box-shadow:0 4px 0 #8A4A08}
+.fin b{font:400 54px/1.05 "Titan One",sans-serif;text-align:center;padding:0 12px;color:#FFEE58;text-shadow:3px 3px 0 #3A1A06,-3px 3px 0 #3A1A06,3px -3px 0 #3A1A06,-3px -3px 0 #3A1A06,0 8px 0 #3A1A06,0 0 34px rgba(255,200,60,.9);transform:rotate(-3deg)}
+.fin i{font:400 26px/1 "Titan One",sans-serif;font-style:normal;color:#fff;background:linear-gradient(180deg,#FF5A6A,#E0306A);padding:7px 16px;border-radius:14px;box-shadow:0 4px 0 #8A1438,0 0 24px rgba(255,90,120,.7);transform:rotate(3deg)}
+@keyframes fin{0%{transform:scale(.1) rotate(-12deg);opacity:0}18%{transform:scale(1.25) rotate(2deg);opacity:1}30%{transform:scale(1)}85%{opacity:1}100%{transform:translateY(-40px) scale(1.05);opacity:0}}
+.zapf.gold{background:radial-gradient(circle at 50% 45%,#FFF3B0,#FFB020 60%,transparent)}
+.tk.hero{animation:hero .9s cubic-bezier(.2,1.6,.4,1)}@keyframes hero{30%{transform:scale(1.18) translateY(-10px)}60%{transform:scale(.96)}100%{transform:none}}
 
 </style>
 </head>
@@ -400,7 +408,7 @@ const I18N={
   master:"MASTER LEVEL",bossSub:"These birds are stubborn. Show them!",newRegion:"NEW REGION UNLOCKED",welcome:"Welcome to {r}",
   chipColors:"{n} bird colors",chipTrunks:"{n} trunks",chipSleepy:"Sleepy birds",chipOne:"One empty trunk",chipTall:"Tall trunks",
   new11:"NEW: Sleepy birds wake up when the birds above them fly away.",new25:"NEW: Only one empty trunk. Think before you move!",new33:"NEW: Taller trunks — 5 birds fit in each nest.",
-  new7:"NEW: Frozen birds! Tap a frozen bird to crack the ice.",new15:"NEW: The thief crow! It eyes a trunk and steals its top bird in 3 moves. Empty or finish that trunk first!",new21:"NEW: Vines lock a trunk until you complete a nest.",new28:"NEW: Spider webs block a trunk for a few moves.",new41:"NEW: Storm cloud! It locks a trunk and lightning jumps it to another every 3 moves.",new46:"NEW: Dawn race! Sort the birds before the sun comes up.",chipStorm:"Storm",chipTime:"Dawn race",lockStorm:"Storm! It moves in {n}",zap:"Lightning!",sunUp:"The sun is up!",sunUpS:"The birds wanted to sleep before dawn.",more30:"+30 seconds",combo:"COMBO ×{n}",
+  new7:"NEW: Frozen birds! Tap a frozen bird to crack the ice.",new15:"NEW: The thief crow! It eyes a trunk and steals its top bird in 3 moves. Empty or finish that trunk first!",new21:"NEW: Vines lock a trunk until you complete a nest.",new28:"NEW: Spider webs block a trunk for a few moves.",new41:"NEW: Storm cloud! It locks a trunk and lightning jumps it to another every 3 moves.",new46:"NEW: Dawn race! Sort the birds before the sun comes up.",chipStorm:"Storm",chipTime:"Dawn race",lockStorm:"Storm! It moves in {n}",zap:"Lightning!",sunUp:"The sun is up!",sunUpS:"The birds wanted to sleep before dawn.",more30:"+30 seconds",combo:"COMBO ×{n}",lastMove:"FINAL MOVE",epic:["LEGENDARY!","EPIC FINISH!","UNSTOPPABLE!","WHAT A MOVE!"],
   chipIce:"Frozen birds",chipCrow:"Thief crow",chipVine:"Vines",chipWeb:"Spider web",wood:"Woodpecker",owlB:"Owl",
   pickT:"Tap a trunk to peck it free",crowGone:"Shoo, crow!",vineGone:"The vine let go!",webGone:"The web snapped!",iceGone:"Crack!",
   lockVine:"Complete a nest to free it",iceThick:"Thick ice! Bring a bird of the same color.",iceThaw:"Warmed up!",new18:"NEW: Thick ice only melts when a bird of the same color lands on it.",new38:"NEW: Ice chains — two frozen birds in one trunk!",
@@ -418,7 +426,7 @@ const I18N={
   master:"USTA BÖLÜMÜ",bossSub:"Kuşlar bu sefer inatçı. Göster kendini!",newRegion:"YENİ BÖLGE AÇILDI",welcome:"Hoş geldin: {r}",
   chipColors:"{n} renk kuş",chipTrunks:"{n} gövde",chipSleepy:"Uyuyan kuşlar",chipOne:"Tek boş gövde",chipTall:"5'li gövde",
   new11:"YENİ: Uyuyan kuşlar, üstlerindeki kuşlar uçunca uyanır.",new25:"YENİ: Tek boş gövde var. Her hamleyi düşün!",new33:"YENİ: Gövdeler uzadı, her yuvaya 5 kuş sığıyor.",
-  new7:"YENİ: Donmuş kuşlar! Buzu kırmak için kuşa dokun.",new15:"YENİ: Hırsız karga! Bir gövdeye göz dikip 3 hamlede üstteki kuşu çalar. Ondan önce gövdeyi boşalt ya da tamamla!",new21:"YENİ: Sarmaşık bir gövdeyi kilitler, bir yuva tamamlayınca çözülür.",new28:"YENİ: Örümcek ağı bir gövdeyi birkaç hamle kapatır.",new41:"YENİ: Fırtına bulutu! Bir gövdeyi kilitler, 3 hamlede bir şimşekle başka gövdeye atlar.",new46:"YENİ: Şafak yarışı! Güneş doğmadan kuşları yerleştir.",chipStorm:"Fırtına",chipTime:"Şafak yarışı",lockStorm:"Fırtına! {n} hamlede gider",zap:"Şimşek!",sunUp:"Güneş doğdu!",sunUpS:"Kuşlar şafaktan önce uyumak istiyordu.",more30:"+30 saniye",combo:"KOMBO ×{n}",
+  new7:"YENİ: Donmuş kuşlar! Buzu kırmak için kuşa dokun.",new15:"YENİ: Hırsız karga! Bir gövdeye göz dikip 3 hamlede üstteki kuşu çalar. Ondan önce gövdeyi boşalt ya da tamamla!",new21:"YENİ: Sarmaşık bir gövdeyi kilitler, bir yuva tamamlayınca çözülür.",new28:"YENİ: Örümcek ağı bir gövdeyi birkaç hamle kapatır.",new41:"YENİ: Fırtına bulutu! Bir gövdeyi kilitler, 3 hamlede bir şimşekle başka gövdeye atlar.",new46:"YENİ: Şafak yarışı! Güneş doğmadan kuşları yerleştir.",chipStorm:"Fırtına",chipTime:"Şafak yarışı",lockStorm:"Fırtına! {n} hamlede gider",zap:"Şimşek!",sunUp:"Güneş doğdu!",sunUpS:"Kuşlar şafaktan önce uyumak istiyordu.",more30:"+30 saniye",combo:"KOMBO ×{n}",lastMove:"SON HAMLE",epic:["EFSANE!","EFSANE FİNAL!","DURDURULAMAZ!","İŞTE BU!"],
   chipIce:"Donmuş kuşlar",chipCrow:"Hırsız karga",chipVine:"Sarmaşık",chipWeb:"Örümcek ağı",wood:"Ağaçkakan",owlB:"Baykuş",
   pickT:"Gagalanacak gövdeye dokun",crowGone:"Kış, karga!",vineGone:"Sarmaşık çözüldü!",webGone:"Ağ koptu!",iceGone:"Çatırt!",
   lockVine:"Çözmek için bir yuva tamamla",iceThick:"Kalın buz! Aynı renkten bir kuş getir.",iceThaw:"Isındı, çözüldü!",new18:"YENİ: Kalın buz, üstüne aynı renk kuş konunca erir.",new38:"YENİ: Buz zinciri! Aynı gövdede iki donmuş kuş.",
@@ -573,16 +581,16 @@ const SEEN=new Set();function fresh(k,i){const key=S.lv+":"+k+":"+i+":"+(S.H?0:0
 function locked(i){return !!S&&(i===S.vine||i===S.web||i===S.storm);}
 function iceTop(i){let f=-1;if(S&&S.ice)S.ice.forEach(([t,k])=>{if(t===i&&k>f)f=k;});return f;}
 function isIce(i,k){return !!(S&&S.ice&&S.ice.some(([t,kk])=>t===i&&kk===k));}
-function obs(lv){const C=cfg(lv),p=C.pos,I={7:"ice",15:"crow",21:"vine",28:"web",41:"storm"};const o={ice:0,crow:0,vine:0,web:0,storm:0};if(I[lv]){o[I[lv]]=1;return o;}
- if(C.easy)return o;const on=[["storm",41,[0,3,8]],["web",28,[0,3,9]],["vine",21,[1,7]],["crow",15,[2,8]],["ice",7,[1,3,7,9]]].filter(([k,from,ps])=>lv>from&&ps.includes(p)).slice(0,2);on.forEach(([k])=>o[k]=1);return o;}
-function tmOn(lv){const p=(lv-1)%10;return lv===46||(lv>46&&[2,4,9].includes(p));}
+function obs(lv){const C=cfg(lv),p=C.pos,I={7:"ice",15:"crow",21:"vine",28:"web",31:"storm"};const o={ice:0,crow:0,vine:0,web:0,storm:0};if(I[lv]){o[I[lv]]=1;return o;}
+ if(C.easy)return o;const on=[["storm",31,[0,3,8]],["web",28,[0,3,9]],["vine",21,[1,7]],["crow",15,[2,8]],["ice",7,[1,3,7,9]]].filter(([k,from,ps])=>lv>from&&ps.includes(p)).slice(0,2);on.forEach(([k])=>o[k]=1);return o;}
+function tmOn(lv){const p=(lv-1)%10;return lv===36||(lv>36&&[2,4,9].includes(p));}
 function setupObs(lv){const O=obs(lv),r=rand(lv*31337+7),T=S.T,full=T.map((x,i)=>i).filter(i=>T[i].length>1),pickT=ex=>{const c=full.filter(i=>!ex.includes(i));return c.length?c[Math.floor(r()*c.length)]:-1;};
  S.seed=Date.now();S.ice=[];S.vine=-1;S.web=-1;S.webN=0;S.crow=-1;S.crowN=0;S.crowIn=0;S.crowTap=0;S.noCrow=0;S.stolen=-1;S.stealN=0;S.crowLv=O.crow?1:0;S.pick=0;S.storm=-1;S.stormN=0;S.stormLv=O.storm?1:0;S.cb=0;S.cbT=0;
  const used=[];
  if(O.vine){S.vine=pickT(used);used.push(S.vine);S.vineN=10;}
  if(O.web){S.web=pickT(used);used.push(S.web);S.webN=5;}
  if(O.storm){S.storm=pickT(used);used.push(S.storm);S.stormN=3;}
- {const C=cfg(lv);S.tmMax=tmOn(lv)?Math.round((lv===46?50:30)+C.nc*8+(C.cap===5?15:0)+(C.emp===1?15:0)+(C.hid?10:0)):0;S.tm=S.tmMax;S.tmX=0;}
+ {const C=cfg(lv);S.tmMax=tmOn(lv)?Math.round((lv===36?50:30)+C.nc*8+(C.cap===5?15:0)+(C.emp===1?15:0)+(C.hid?10:0)):0;S.tm=S.tmMax;S.tmX=0;}
  if(O.ice){const tier=lv>=38?3:lv>=18?2:1,n=lv===7?2:tier===3?2:1+Math.min(2,Math.floor((lv-1)/10));
   for(let j=0;j<n;j++){const t=pickT(used);if(t<0)break;used.push(t);const L=T[t].length;
    if(tier===1){const k=L-1-(S.hv[t]>=L-1||r()<.5?0:1);S.ice.push([t,Math.max(S.hv[t]||0,k),0,0]);}
@@ -749,10 +757,10 @@ function fly(a,b,m){BUSY=true;const E=$("tubes");const A=E.querySelector(`.tk[da
   const k0=1/K;c.animate([{transform:`translate(0,0) scale(${k0})`},{transform:`translate(${mx-sx}px,${my-sy}px) rotate(${dir*8}deg) scale(1)`,offset:.42},{transform:`translate(${mx-sx}px,${my-sy-6}px) rotate(${-dir*4}deg) scale(.96)`,offset:.55},{transform:`translate(${txc-sx}px,${tyc-sy-8}px) rotate(${-dir*4}deg) scale(${k0*1.05})`,offset:.9},{transform:`translate(${txc-sx}px,${tyc-sy}px) rotate(0) scale(${k0})`}],{duration:dur,delay:j*gap,easing:"cubic-bezier(.4,0,.3,1)",fill:"both"});});
  setTimeout(()=>{const pre=S.T[b].length;S.H.push(S.T.map(x=>x.slice()));for(let k=0;k<m;k++)S.T[b].push(S.T[a].pop());const thw=pre?iceAt(b,pre-1):null;if(thw&&S.T[b][pre-1]===S.T[b][pre]){S.ice=S.ice.filter(x=>x!==thw);misInc("ice");setTimeout(()=>{sfx("crack");fxAt(b,["#E6F7FF","#A8DCFF","#FFE38A"],16);toast(t("iceThaw"));mood([document.querySelector(`.tk[data-t="${b}"] .b[style*="--k:${pre-1};"]`)],"joy",1200);},120);}S.mv++;S.sel=-1;fl.forEach(c=>c.remove());BUSY=false;const tb=S.T[b],full=tb.length===CAP&&tb.every(x=>x===tb[0]);paint();
   const Bn=document.querySelector(`.tk[data-t="${b}"]`);if(Bn){const L=[...Bn.querySelectorAll(".b")].slice(-m);L.forEach((x,i)=>{x.classList.add("land");x.style.animationDelay=(i*.04)+"s";});if(!full)mood(L,"joy",1000);}
-  if(full){setTimeout(()=>sfx("done"),120);if(Bn){Bn.classList.add("sing");const r=Bn.getBoundingClientRect();FXC.burst(r.left+r.width/2,r.top+10,["#fff","#B8E986","#FFE38A",COL[tb[0]]],26,{sp:7,up:4});FXC.ring(r.left+r.width/2,r.top+10,"#FFF3B0",90,5);}vib([12,40,12]);streak++;{const nw=Date.now();S.cb=nw-(S.cbT||0)<9000?(S.cb||1)+1:1;S.cbT=nw;}if(!solved(S.T)){praise(streak);if(S.cb>=2)combo(S.cb);}else owl("spin");}
+  if(full){setTimeout(()=>sfx("done"),120);if(Bn){Bn.classList.add("sing");const r=Bn.getBoundingClientRect();FXC.burst(r.left+r.width/2,r.top+10,["#fff","#B8E986","#FFE38A",COL[tb[0]]],26,{sp:7,up:4});FXC.ring(r.left+r.width/2,r.top+10,"#FFF3B0",90,5);}vib([12,40,12]);streak++;{const nw=Date.now();S.cb=nw-(S.cbT||0)<9000?(S.cb||1)+1:1;S.cbT=nw;}if(!solved(S.T)){praise(streak);if(S.cb>=2)combo(S.cb);}else{owl("spin");finale(b,S.cb);}}
   else{vib(8);streak=0;}
   if(full)S.ice=S.ice.filter(([tt])=>tt!==b);
-  if(solved(S.T)){S.vine=S.web=S.crow=S.storm=-1;S.ice=[];S.stolen=-1;setTimeout(win,full?650:180);}else{tickObs(full);setTimeout(()=>{if(S.won||BUSY)return;if(!anyMove()&&!rescue()){mood(S.T.map((_,i)=>topB(i)),"oh");setTimeout(stuck,700);}},S.crow>=0?500:0);}persist();},dur+gap*(m-1)+20);}
+  if(solved(S.T)){S.vine=S.web=S.crow=S.storm=-1;S.ice=[];S.stolen=-1;setTimeout(win,full?1900:180);}else{tickObs(full);setTimeout(()=>{if(S.won||BUSY)return;if(!anyMove()&&!rescue()){mood(S.T.map((_,i)=>topB(i)),"oh");setTimeout(stuck,700);}},S.crow>=0?500:0);}persist();},dur+gap*(m-1)+20);}
 function tickObs(full){
  if(S.web>=0){S.webN--;if(S.webN<=0)webSnap();else{const e=document.querySelector(`.tk[data-t="${S.web}"] .ob-w em`);if(e)e.textContent=S.webN;}}
  if(S.vine>=0){S.vineN=(S.vineN||10)-1;if(full||S.vineN<=0)vineGo();}
@@ -765,6 +773,11 @@ function zap(i){const W=$("game"),el=document.querySelector(`.tk[data-t="${i}"]`
  if(el){const r=el.getBoundingClientRect(),b=document.createElement("div");b.className="bolt";b.style.cssText=`left:${r.left+r.width/2-30}px;height:${Math.max(40,r.top+r.height*.2)}px`;b.innerHTML='<svg viewBox="0 0 60 200" preserveAspectRatio="none"><path d="M34 0L18 80h16L10 200l36-120H30L44 0z" fill="#FFF6B0" stroke="#FFD23F" stroke-width="3"/></svg>';document.body.appendChild(b);setTimeout(()=>b.remove(),600);FXC.burst(r.left+r.width/2,r.top+r.height*.3,["#FFE14A","#fff","#A8C8FF"],22,{sp:7,up:3});}
  mood([topB(i)],"oh",1200);toast(t("zap"));}
 function shake(W){if(!W)return;W.classList.remove("shake");void W.offsetWidth;W.classList.add("shake");setTimeout(()=>W.classList.remove("shake"),520);}
+function finale(b,n){const W=$("game");if(!W)return;W.querySelectorAll(".pr,.cmb,.tst").forEach(e=>e.remove());const d=document.createElement("div");d.className="fin";
+ d.innerHTML=`<small>${t("lastMove")}</small><b>${pick(t("epic"))}</b>${n>=2?`<i>${t("combo",{n})}</i>`:""}`;W.appendChild(d);setTimeout(()=>d.remove(),1900);
+ shake(W);setTimeout(()=>shake(W),380);sfx("boom");setTimeout(()=>sfx("fan"),160);vib([40,30,40,30,80]);
+ const el=document.querySelector(`.tk[data-t="${b}"]`);if(el){el.classList.add("hero");const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height*.3;FXC.ring(x,y,"#FFE38A",160,7);setTimeout(()=>FXC.ring(x,y,"#FF8FB5",220,6),180);FXC.burst(x,y,["#FFE38A","#fff","#FF6FB5","#2F7BFF","#3CC24A"],60,{sp:10,up:5});}
+ FXC.confetti(90+n*20);const f=document.createElement("div");f.className="zapf gold";W.appendChild(f);setTimeout(()=>f.remove(),700);}
 function combo(n){const W=$("game");if(!W)return;W.querySelectorAll(".cmb").forEach(e=>e.remove());const d=document.createElement("div");d.className="cmb";d.innerHTML=`<b>${t("combo",{n})}</b>`;W.appendChild(d);setTimeout(()=>d.remove(),1400);shake(W);sfx("fan");FXC.confetti(28+n*12);}
 function crowTick(full){
  if(S.stolen>=0){S.stealN--;if(full||S.stealN<=0)returnBird();return;}
@@ -861,7 +874,7 @@ function levelPicker(){if(BUSY)return;const O=$("ov"),mx=lvMax(),St=G.stars||{};
  O.querySelectorAll("[data-lk]").forEach(b=>b.onclick=()=>{sfx("bad");b.classList.remove("nope");void b.offsetWidth;b.classList.add("nope");});
  O.querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{O.hidden=true;sfx("tap");startLevel(+b.dataset.lv);shownHv=[];paint();setTimeout(newHint,500);});$("pk-x").onclick=()=>{O.hidden=true;};}
 
- function journey(from,to,c0){const sn=seenNew();const info={c:c0,chips:jchips(),sub:({7:t("new7"),11:t("new11"),15:t("new15"),18:t("new18"),21:t("new21"),25:t("new25"),28:t("new28"),33:t("new33"),38:t("new38"),41:t("new41"),46:t("new46")})[to]||sn};document.getElementById("kyj")&&document.getElementById("kyj").remove();
+ function journey(from,to,c0){const sn=seenNew();const info={c:c0,chips:jchips(),sub:({7:t("new7"),11:t("new11"),15:t("new15"),18:t("new18"),21:t("new21"),25:t("new25"),28:t("new28"),33:t("new33"),38:t("new38"),31:t("new41"),36:t("new46")})[to]||sn};document.getElementById("kyj")&&document.getElementById("kyj").remove();
   const W=Math.min(innerWidth,520),H=innerHeight,gap=128,a=Math.max(1,from-3),b=to+3;
   const P=i=>[W/2+Math.sin(i*1.25)*W*.26,(b-i)*gap+H*.4];const tot=(b-a)*gap+H*.8;
   const seg=(i,j)=>{let d="";for(let k=i;k<j;k++){const [x1,y1]=P(k),[x2,y2]=P(k+1);d+=(k===i?`M${x1} ${y1}`:"")+`C${x1} ${y1-gap*.55} ${x2} ${y2+gap*.55} ${x2} ${y2}`;}return d;};
