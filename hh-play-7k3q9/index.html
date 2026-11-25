@@ -239,7 +239,7 @@ button:disabled{cursor:default}
 #title .moon{left:auto;right:14%;top:calc(env(safe-area-inset-top) + 160px);width:40px;height:40px}
 
 /* ---------- bird moods: joy (nest done / landed), grr (rejected), oh (stuck) ---------- */
-.bs .fh,.bs .fo,.bs .fg{display:none}
+.bs .fh,.bs .fo,.bs .fg,.bs .fs{display:none}
 .bs .lid{fill:color-mix(in srgb,var(--c) 88%,#fff)}.bs .brw{stroke:color-mix(in srgb,var(--c) 45%,#2A1206)}.bs .ink{stroke:var(--ink,#2A1A10)}.bs .hp{stroke:#2A1A10}[style*="--ink"] .brw{stroke:var(--ink)}
 .joy .ey,.tk.full .b .ey{display:none}.joy .fh,.tk.full .b .fh{display:inline}
 .oh .ey{display:none}.oh .fo{display:inline}
@@ -284,6 +284,14 @@ button:disabled{cursor:default}
 .acts.many .plank>span svg{width:20px;height:20px}
 .tst{position:absolute;left:50%;top:24%;z-index:31;transform:translateX(-50%);padding:9px 16px;border-radius:99px;background:rgba(20,16,30,.86);color:#FFF4DA;font:600 15px/1.2 "Fredoka",sans-serif;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.5);pointer-events:none;animation:tst 1.7s ease both}
 @keyframes tst{0%{opacity:0;transform:translate(-50%,8px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,-6px)}}
+
+/* trapped birds: sad under web/vine, sulky under the crow, shivering in ice */
+.sad .ey{display:none}.sad .fs{display:inline}
+.sad .tear{transform-origin:11.2px 23px;animation:tear 2.6s ease-in infinite;animation-delay:var(--d)}@keyframes tear{0%,40%{opacity:0;transform:translateY(-2px) scale(.4)}55%{opacity:1;transform:none}100%{opacity:0;transform:translateY(7px)}}
+.b.sad .bs{animation:sadb 3s ease-in-out infinite}@keyframes sadb{50%{transform:translateY(1.5px) rotate(-3deg)}}
+.sulk .fg{display:inline}.sulk .vein{transform-origin:35px 8.5px;animation:vein .6s ease-in-out infinite alternate}
+.b.sulk .bs{animation:sulkb 2.2s ease-in-out infinite}@keyframes sulkb{0%,70%,100%{transform:none}78%{transform:rotate(-6deg)}86%{transform:rotate(5deg)}}
+.b.ice .bs{animation:shiv 2.6s linear infinite;animation-delay:var(--d)}@keyframes shiv{0%,62%,100%{transform:none}64%,68%,72%,76%{transform:translateX(-.8px)}66%,70%,74%,78%{transform:translateX(.8px)}}
 
 </style>
 </head>
@@ -401,6 +409,7 @@ function bird(c,cls){const cr=[
  <g class="ey"><circle cx="14.6" cy="19" r="5" fill="#fff"/><circle cx="25.4" cy="19" r="5" fill="#fff"/><circle cx="15.4" cy="19.6" r="2.7" fill="#2A1A10"/><circle cx="24.6" cy="19.6" r="2.7" fill="#2A1A10"/><circle cx="16.3" cy="18.5" r="1" fill="#fff"/><circle cx="25.5" cy="18.5" r="1" fill="#fff"/></g>
  <g class="fh"><circle cx="14.6" cy="19" r="5" fill="#fff"/><circle cx="25.4" cy="19" r="5" fill="#fff"/><path class="ink hp" d="M11.4 20.4q3.2-4 6.4 0M22.2 20.4q3.2-4 6.4 0" fill="none" stroke-width="2" stroke-linecap="round"/></g>
  <g class="fo"><circle cx="14.6" cy="18.6" r="5.6" fill="#fff"/><circle cx="25.4" cy="18.6" r="5.6" fill="#fff"/><circle cx="14.6" cy="18.8" r="1.6" fill="#2A1A10"/><circle cx="25.4" cy="18.8" r="1.6" fill="#2A1A10"/><path class="ink" d="M10.2 10.8q4.4-3.2 8.8 0M21 10.8q4.4-3.2 8.8 0" fill="none" stroke-width="1.6" stroke-linecap="round"/></g>
+ <g class="fs"><circle cx="14.6" cy="19" r="5.2" fill="#fff"/><circle cx="25.4" cy="19" r="5.2" fill="#fff"/><circle cx="14.8" cy="19.6" r="3.3" fill="#2A1A10"/><circle cx="25.2" cy="19.6" r="3.3" fill="#2A1A10"/><circle cx="16" cy="18.2" r="1.3" fill="#fff"/><circle cx="26.4" cy="18.2" r="1.3" fill="#fff"/><circle cx="13.7" cy="21" r=".65" fill="#fff"/><circle cx="24.1" cy="21" r=".65" fill="#fff"/><path class="brw" d="M10.6 14.8q3.6-.6 7-3M29.4 14.8q-3.6-.6-7-3" fill="none" stroke-width="1.5" stroke-linecap="round"/><path class="tear" d="M11.2 23.2q-1.6 2.4 0 3.4 1.6-1 0-3.4z" fill="#8FD3FF" stroke="#4A9AD0" stroke-width=".4"/></g>
  <g class="fg"><path class="lid" d="M9.2 18.4a5.4 5.4 0 0 1 10.8 0zM20 18.4a5.4 5.4 0 0 1 10.8 0z"/><path class="brw" d="M11.4 13.6q3.4-.4 6.4 2M28.6 13.6q-3.4-.4-6.4 2" fill="none" stroke-width="1.5" stroke-linecap="round"/><path class="vein" d="M31.6 7.4Q33.6 7.4 33.6 5.4M36.4 5.4Q36.4 7.4 38.4 7.4M38.4 9.6Q36.4 9.6 36.4 11.6M33.6 11.6Q33.6 9.6 31.6 9.6" fill="none" stroke="#FF4D5E" stroke-width="1.5" stroke-linecap="round"/></g>
  <path d="M16.6 23.4h6.8L20 28.6z" fill="#F59A23"/><path d="M16.6 23.4h6.8L20 25.6z" fill="#FFD36A"/></svg>`;}
 const DEFS='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="kyShade" cx="36%" cy="28%" r="78%"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".35" stop-color="#fff" stop-opacity=".06"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#2A1206" stop-opacity=".32"/></radialGradient></defs></svg>';
@@ -554,7 +563,7 @@ function openGame(){const E=$("game");E.innerHTML=gameHTML();show("game");bindGa
 function trunkHTML(x,i){const full=x.length===CAP&&x.every(y=>y===x[0]),ok=S.sel>=0&&S.sel!==i&&can(S.T,S.sel,i),hv=S.hv[i]||0;
  const pk=S.pick==="wood"&&(i===S.vine||i===S.web||iceTop(i)>=0);
  return `<button type="button" class="tk${S.sel===i?" sel":""}${full?" full":""}${ok?" ok":""}${i===S.vine?" vined":""}${i===S.web?" webbed":""}${i===S.crow?" crowed":""}${pk?" pk":""}" data-t="${i}" aria-label="${t("trunk",{n:i+1})}"><span class="tr"><span class="hol"></span><span class="cap"></span><span class="knot" style="--ky:${18+(i*37)%40}%;--kx:${i%2?62:18}%"></span>${i%3===1?'<span class="leaf"></span>':""}</span>
-  <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice":""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v">${VINE}</span>`:""}${i===S.web?`<span class="ob-w">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c">${CROW}<em>${"●".repeat(3-S.crowTap)}</em></span>`:""}</button>`;}
+  <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice":""}${k===x.length-1&&k>=hv&&!isIce(i,k)?(i===S.crow?" sulk":i===S.vine||i===S.web?" sad":""):""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v">${VINE}</span>`:""}${i===S.web?`<span class="ob-w">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c">${CROW}<em>${"●".repeat(3-S.crowTap)}</em></span>`:""}</button>`;}
 let shownHv=[];
 function paint(){const E=$("tubes");if(!E||!S)return;norm();const A=document.querySelector("#game .acts");if(A&&(!!$("g-wood")!==!!S.wood||!!$("g-hoo")!==!!S.hoo)){const tmp=document.createElement("div");tmp.innerHTML=gameHTML();A.replaceWith(tmp.querySelector(".acts"));bindActs();}const W0=$("game");W0.classList.toggle("nohint",S.lv>3);W0.dataset.reg=String(Math.floor((S.lv-1)/10)%6);
  E.innerHTML=S.T.map(trunkHTML).join("");$("g-un").textContent=S.undo;$("g-pl").textContent=S.plus;$("g-undo").disabled=!S.H.length||!S.undo;$("g-add").disabled=!S.plus;$("g-lv").textContent=S.lv;
@@ -601,13 +610,13 @@ function toast(txt){const W=$("game");W.querySelectorAll(".tst").forEach(e=>e.re
 function fxAt(i,cols,n){const el=document.querySelector(`.tk[data-t="${i}"]`);if(!el)return;const r=el.getBoundingClientRect();FXC.burst(r.left+r.width/2,r.top+r.height*.3,cols,n||22,{sp:6,up:3});}
 function crackIce(i,k){S.ice=S.ice.filter(([tt,kk])=>!(tt===i&&kk===k));sfx("crack");vib(15);const el=document.querySelector(`.tk[data-t="${i}"] .b[style*="--k:${k};"]`);if(el){const r=el.getBoundingClientRect();FXC.burst(r.left+r.width/2,r.top+r.height/2,["#E6F7FF","#A8DCFF","#fff"],18,{sp:5,up:2.5,sz:4});}
  paint();const nb=document.querySelector(`.tk[data-t="${i}"] .b[style*="--k:${k};"]`);if(nb)mood([nb],"joy",900);persist();}
-function vineGo(){const i=S.vine;S.vine=-1;sfx("snap");fxAt(i,["#6CC24A","#3E8A32","#B8E986"]);toast(t("vineGone"));paint();persist();}
-function webSnap(){const i=S.web;S.web=-1;sfx("snap");fxAt(i,["#F0F8FF","#D6E4F0"]);toast(t("webGone"));paint();persist();}
+function vineGo(){const i=S.vine;S.vine=-1;sfx("snap");fxAt(i,["#6CC24A","#3E8A32","#B8E986"]);toast(t("vineGone"));paint();mood([topB(i)],"joy",1200);persist();}
+function webSnap(){const i=S.web;S.web=-1;sfx("snap");fxAt(i,["#F0F8FF","#D6E4F0"]);toast(t("webGone"));paint();mood([topB(i)],"joy",1200);persist();}
 function crowCome(){const c=S.T.map((x,i)=>i).filter(i=>S.T[i].length&&!locked(i)&&i!==S.sel&&!(S.T[i].length===CAP&&S.T[i].every(y=>y===S.T[i][0])));if(!c.length){S.crowIn=2;return;}
  S.crow=c[Math.floor(Math.random()*c.length)];S.crowTap=0;sfx("caw");paint();const e=document.querySelector(`.tk[data-t="${S.crow}"] .ob-c`);if(e)e.classList.add("arrive");mood([topB(S.crow)],"oh",1200);}
 function crowLeave(){const i=S.crow;if(i<0)return;const e=document.querySelector(`.tk[data-t="${i}"] .ob-c`);S.crow=-1;S.crowTap=0;S.crowIn=6;sfx("caw");toast(t("crowGone"));
  if(e){const r=e.getBoundingClientRect(),c=e.cloneNode(true);c.className="ob-c gone";c.style.cssText=`position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;z-index:60`;document.body.appendChild(c);setTimeout(()=>c.remove(),900);FXC.burst(r.left+r.width/2,r.top+r.height/2,["#2E2D3C","#3C3A52","#6B5FA0"],14,{sp:5,up:3,sz:4});}
- paint();persist();}
+ paint();mood([topB(i)],"joy",1200);persist();}
 function peck(i){BUSY=true;const el=document.querySelector(`.tk[data-t="${i}"]`);if(el)el.classList.add("pecking");sfx("peck");owl("cheer");
  setTimeout(()=>{BUSY=false;if(i===S.vine)vineGo();else if(i===S.web)webSnap();else{S.ice=S.ice.filter(([tt])=>tt!==i);sfx("crack");fxAt(i,["#E6F7FF","#A8DCFF","#fff"]);paint();}persist();},700);}
 function mood(els,cls,ms){els.forEach(x=>{if(!x)return;x.classList.remove(cls);void x.offsetWidth;x.classList.add(cls);if(ms)setTimeout(()=>x.classList.remove(cls),ms);});}
