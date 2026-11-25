@@ -332,6 +332,15 @@ button:disabled{cursor:default}
 .iw{white-space:nowrap}.ii{position:relative;display:inline-block}
 .ii::after{content:"";position:absolute;left:50%;top:-.16em;width:.26em;height:.26em;margin-left:-.13em;border-radius:50%;background:currentColor;box-shadow:0 0 0 .055em rgba(42,18,4,.85)}
 
+/* ---------- light mode (slower phones): flat shadows, fewer idle animations ---------- */
+.lite .b svg,.lite .fly svg,.lite .b.zz svg,.lite .flock .tb svg,.lite .cvs,.lite .owl,.lite .sq,.lite .ob-v svg,.lite .ob-w svg,.lite .kyj-bird,.lite .fly-owl{filter:none}
+.lite .ob-c svg{filter:drop-shadow(0 0 1.5px rgba(230,236,255,.95))}
+.lite .b.zz .bs{filter:brightness(.85)}
+.lite .b .ey,.lite .b.zz .bs,.lite .zz text,.lite .ob-w .dew,.lite .ob-w .spd,.lite .ob-c .cw-t{animation:none}
+.lite .fog,.lite .cl,.lite .fall,.lite .sky u,.lite .cloud,.lite .stz i{display:none}
+.lite .ov{backdrop-filter:none;background:rgba(6,10,8,.72)}
+.lite .tr{box-shadow:inset 0 -8px 12px rgba(30,14,4,.35),0 0 0 1px rgba(0,0,0,.25)}
+
 </style>
 </head>
 <body>
@@ -416,12 +425,19 @@ function sfx(k,x){if(!sndOn())return;try{const C=ac();if(!C||C.state!=="running"
  }catch(e){}}
 
 /* ---------- particles (canvas) ---------- */
+/* ---------- performance: light mode for slower phones ---------- */
+let LITE=false;
+function setLite(on,why){LITE=!!on;document.documentElement.classList.toggle("lite",LITE);try{G.lite=LITE?1:0;G.liteWhy=why||"";save();}catch(e){}}
+function perfProbe(){try{if(G.lite===1){setLite(true,"saved");return;}const n=navigator,cores=n.hardwareConcurrency||8,mem=n.deviceMemory||8;if(cores<=4&&mem<=2){setLite(true,"hw");return;}
+  let f=[],last=0,t0=performance.now();const loop=t=>{if(last)f.push(t-last);last=t;if(t-t0<1800)requestAnimationFrame(loop);else{f.sort((a,b)=>a-b);const med=f[Math.floor(f.length/2)]||16,slow=f.filter(x=>x>34).length/Math.max(1,f.length);if(med>22||slow>.25)setLite(true,"probe");}};requestAnimationFrame(loop);
+  // keep watching during play: sustained jank switches to light mode
+  let w=[],wl=0;const watch=t=>{if(LITE)return;if(wl&&!document.hidden){w.push(t-wl);if(w.length>90)w.shift();if(w.length===90){const avg=w.reduce((a,b)=>a+b,0)/90;if(avg>30){setLite(true,"watch");return;}}}wl=t;requestAnimationFrame(watch);};setTimeout(()=>requestAnimationFrame(watch),4000);}catch(e){}}
 const FXC={cv:null,g:null,P:[],R:[],raf:0,dpr:1,
  ensure(){if(this.cv)return;const c=document.createElement("canvas");c.id="fx";document.body.appendChild(c);this.cv=c;this.g=c.getContext("2d");this.fit();addEventListener("resize",()=>this.fit());},
  fit(){this.dpr=Math.min(2,devicePixelRatio||1);this.cv.width=innerWidth*this.dpr;this.cv.height=innerHeight*this.dpr;this.g.setTransform(this.dpr,0,0,this.dpr,0,0);},
- burst(x,y,cols,n,o){this.ensure();o=o||{};for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=(o.sp||5)*(.4+Math.random());this.P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-(o.up||2),c:cols[i%cols.length],s:(o.sz||6)*(.5+Math.random()*.7),l:1,r:Math.random()*6,vr:(Math.random()-.5)*.3,sh:i%3});}this.run();},
+ burst(x,y,cols,n,o){this.ensure();o=o||{};if(LITE)n=Math.max(3,Math.round(n*.4));for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=(o.sp||5)*(.4+Math.random());this.P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-(o.up||2),c:cols[i%cols.length],s:(o.sz||6)*(.5+Math.random()*.7),l:1,r:Math.random()*6,vr:(Math.random()-.5)*.3,sh:i%3});}this.run();},
  ring(x,y,c,R,w){this.ensure();this.R.push({x,y,c,R,w:w||4,l:1});this.run();},
- confetti(n){this.ensure();const cols=["#FFD23F","#FF6FB5","#2F7BFF","#3CC24A","#FF8A1F","#fff","#9150E6"];for(let i=0;i<n;i++)this.P.push({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.4,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,c:cols[i%cols.length],s:6+Math.random()*5,l:1.6,r:Math.random()*6,vr:(Math.random()-.5)*.3,sh:3,cf:1});this.run();},
+ confetti(n){this.ensure();if(LITE)n=Math.round(n*.35);const cols=["#FFD23F","#FF6FB5","#2F7BFF","#3CC24A","#FF8A1F","#fff","#9150E6"];for(let i=0;i<n;i++)this.P.push({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.4,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,c:cols[i%cols.length],s:6+Math.random()*5,l:1.6,r:Math.random()*6,vr:(Math.random()-.5)*.3,sh:3,cf:1});this.run();},
  run(){if(this.raf)return;const g=this.g;const step=()=>{g.clearRect(0,0,innerWidth,innerHeight);
    this.P=this.P.filter(p=>p.l>0);for(const p of this.P){p.x+=p.vx;p.y+=p.vy;p.vy+=p.cf?.04:.18;p.vx*=.99;p.r+=p.vr;p.l-=p.cf?.006:.022;g.save();g.globalAlpha=Math.max(0,Math.min(1,p.l));g.translate(p.x,p.y);g.rotate(p.r);g.fillStyle=p.c;
     if(p.sh===3)g.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);else if(p.sh===1){g.beginPath();g.ellipse(0,0,p.s*.7,p.s*.32,0,0,7);g.fill();}else{g.beginPath();g.arc(0,0,p.s/2,0,7);g.fill();}g.restore();}
@@ -645,7 +661,7 @@ function trunkHTML(x,i){const full=x.length===CAP&&x.every(y=>y===x[0]),ok=S.sel
   <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice"+(iceAt(i,k)[2]?" thick":"")+(iceAt(i,k)[3]?" crk":""):""}${k===x.length-1&&k>=hv&&!isIce(i,k)?(i===S.crow?" sulk":i===S.vine||i===S.web?" sad":""):""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v${fresh("v",i)}">${VINE}</span>`:""}${i===S.web?`<span class="ob-w${fresh("w",i)}">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c${(G.crowN||0)<=3&&!S.crowTap?" hintme":""}">${CROW}<span class="hand">${HAND}</span></span>`:""}</button>`;}
 let shownHv=[];
 function paint(){const E=$("tubes");if(!E||!S)return;norm();const A=document.querySelector("#game .acts");if(A&&(!!$("g-wood")!==!!S.wood||!!$("g-hoo")!==!!S.hoo)){const tmp=document.createElement("div");tmp.innerHTML=gameHTML();A.replaceWith(tmp.querySelector(".acts"));bindActs();}const W0=$("game");W0.classList.toggle("nohint",S.lv>3);W0.dataset.reg=String(Math.floor((S.lv-1)/10)%6);
- E.innerHTML=S.T.map(trunkHTML).join("");$("g-un").textContent=S.undo;$("g-pl").textContent=S.plus;$("g-undo").disabled=!S.H.length||!S.undo;$("g-add").disabled=!S.plus;$("g-lv").textContent=S.lv;
+ {const H=S.T.map(trunkHTML),C=E._c||[];if(E.children.length!==H.length||C.length!==H.length){E.innerHTML=H.join("");}else{for(let i=0;i<H.length;i++)if(C[i]!==H[i]){const tmp=document.createElement("div");tmp.innerHTML=H[i];E.replaceChild(tmp.firstElementChild,E.children[i]);}}E._c=H;}$("g-un").textContent=S.undo;$("g-pl").textContent=S.plus;$("g-undo").disabled=!S.H.length||!S.undo;$("g-add").disabled=!S.plus;$("g-lv").textContent=S.lv;
  if($("g-wood")){$("g-wd").textContent=S.wood;$("g-wood").disabled=!S.wood||!(S.vine>=0||S.web>=0||S.ice.length);$("g-wood").classList.toggle("on",S.pick==="wood");}
  if($("g-hoo")){$("g-ho").textContent=S.hoo;$("g-hoo").disabled=!S.hoo||S.crow<0;}
  paintMis();layout();
@@ -787,7 +803,7 @@ try{new MutationObserver(fixSoon).observe(document.documentElement,{childList:tr
 
 /* ---------- boot ---------- */
 function boot(){document.documentElement.lang=lang();
- document.body.insertAdjacentHTML("beforeend",GDEFS+'<main class="screen" id="title"></main><main class="screen" id="game" hidden></main>');
+ perfProbe();document.body.insertAdjacentHTML("beforeend",GDEFS+'<main class="screen" id="title"></main><main class="screen" id="game" hidden></main>');
  renderTitle();
  if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});}
 boot();
