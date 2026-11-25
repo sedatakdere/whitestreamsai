@@ -76,9 +76,9 @@ button:disabled{cursor:default}
 @keyframes owL{to{transform:rotate(40deg)}}@keyframes owR{to{transform:rotate(-40deg)}}
 .owl.spin{animation:os .9s cubic-bezier(.3,1.3,.5,1)}@keyframes os{40%{transform:translateY(-14px) rotate(180deg)}80%{transform:translateY(-4px) rotate(360deg)}100%{transform:rotate(360deg)}}
 .sq{position:absolute;left:-70px;top:12px;width:64px;height:48px;z-index:1;opacity:0;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}.sq svg{width:100%;height:100%}
-.sq.run{animation:sq 6.5s ease-in-out forwards}
+.sq.run{animation:sq 13s ease-in-out forwards}
 @keyframes sq{0%{opacity:1;transform:translate(0,0)}22%{transform:translate(150px,30px)}28%{transform:translate(150px,24px)}34%{transform:translate(150px,30px)}60%{transform:translate(150px,30px) scaleX(1)}64%{transform:translate(150px,30px) scaleX(-1)}68%{transform:translate(150px,30px) scaleX(1)}99%{opacity:1}100%{opacity:0;transform:translate(calc(100vw + 40px),6px)}}
-.sq.run .sq-tail{transform-origin:16px 40px;animation:tail .3s ease-in-out 18 alternate}@keyframes tail{to{transform:rotate(-12deg)}}
+.sq.run .sq-tail{transform-origin:16px 40px;animation:tail .45s ease-in-out 28 alternate}@keyframes tail{to{transform:rotate(-12deg)}}
 
 /* ---------- wood UI ---------- */
 .disc{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 50% 45%,#F2CF98 0 26%,#DDAE6E 27% 36%,#EFC88E 37% 50%,#C99058 51% 64%,#8A5A30 65% 72%,#5E3A1C 73%);color:#3A1F0C;box-shadow:inset 0 0 0 2.5px #4A2A12,0 4px 0 #2A1608,0 10px 16px -6px rgba(0,0,0,.7);transition:transform .1s}
@@ -310,6 +310,14 @@ button:disabled{cursor:default}
 .lvb.lk.bs::before{content:"";position:absolute;top:-9px;left:50%;width:22px;height:13px;margin-left:-11px;background:#FFC83A;clip-path:polygon(0 100%,0 30%,25% 60%,50% 0,75% 60%,100% 30%,100% 100%)}
 .lvb.nope{animation:nope .4s ease-in-out}
 
+.ob-c .hand{display:none;position:absolute;right:-18%;bottom:-30%;width:42%;height:52%;pointer-events:none;filter:drop-shadow(0 3px 3px rgba(0,0,0,.5))}
+.ob-c .hand svg{width:100%;height:100%}
+.ob-c.hintme .hand{display:block;animation:tapme 1s ease-in-out infinite}
+@keyframes tapme{0%,100%{transform:translate(0,0) rotate(-12deg)}45%{transform:translate(-14%,-16%) rotate(-12deg) scale(.88)}55%{transform:translate(-14%,-16%) rotate(-12deg) scale(.88)}}
+.ob-c.hintme::after{content:"";position:absolute;left:50%;top:50%;width:70%;height:70%;margin:-35% 0 0 -35%;border-radius:50%;border:3px solid rgba(255,236,140,.9);animation:ring 1s ease-out infinite;pointer-events:none}
+@keyframes ring{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.ob-c em{font-size:calc(var(--w)*.24)!important;letter-spacing:3px!important;text-shadow:0 0 6px rgba(255,200,80,.8),0 2px 0 #2A1406!important}
+
 </style>
 </head>
 <body>
@@ -333,7 +341,7 @@ const I18N={
   chipIce:"Frozen birds",chipCrow:"Sneaky crow",chipVine:"Vines",chipWeb:"Spider web",wood:"Woodpecker",owlB:"Owl",
   pickT:"Tap a trunk to peck it free",crowGone:"Shoo, crow!",vineGone:"The vine let go!",webGone:"The web snapped!",iceGone:"Crack!",
   lockVine:"Complete a nest to free it",iceThick:"Thick ice! Bring a bird of the same color.",iceThaw:"Warmed up!",new18:"NEW: Thick ice only melts when a bird of the same color lands on it.",new38:"NEW: Ice chains — two frozen birds in one trunk!",
-  misIce:"Free {n} frozen birds",misIce1:"Free the frozen bird",misCrow:"Shoo the crow {n} times",misNoWood:"Win without the woodpecker",misDone:"Mission complete!",lockWeb:"{n} more moves",lockCrow:"Tap the crow!",freed:"The forest helped you!",
+  misIce:"Free {n} frozen birds",misIce1:"Free the frozen bird",misCrow:"Shoo the crow {n} times",misNoWood:"Win without the woodpecker",misDone:"Mission complete!",lockWeb:"{n} more moves",lockCrow:"Tap the crow 3 times to shoo it!",freed:"The forest helped you!",
   streak:"×{n} streak",stars:"{n} stars",sound:"Sound",lang:"Language",privacy:"Privacy",home:"Home",restartA:"Restart",
   regions:["Old Oak Forest","Moonlight Lake","Misty Mountain","Cloud Hill","Starry Grove","Amber Valley"],
   shouts:["TWEET-TASTIC!","WINGS ON FIRE!","BOSS OF THE FOREST!","FEATHERS UP!","WHAT A SPEED!","THE BIRDS ADORE YOU!","NEST MASTER!","WHOOSH! NEXT!","THE TREES APPLAUD!","BEAKS DROPPED!"],
@@ -351,7 +359,7 @@ const I18N={
   chipIce:"Donmuş kuşlar",chipCrow:"Kurnaz karga",chipVine:"Sarmaşık",chipWeb:"Örümcek ağı",wood:"Ağaçkakan",owlB:"Baykuş",
   pickT:"Gagalanacak gövdeye dokun",crowGone:"Kış, karga!",vineGone:"Sarmaşık çözüldü!",webGone:"Ağ koptu!",iceGone:"Çatırt!",
   lockVine:"Çözmek için bir yuva tamamla",iceThick:"Kalın buz! Aynı renkten bir kuş getir.",iceThaw:"Isındı, çözüldü!",new18:"YENİ: Kalın buz, üstüne aynı renk kuş konunca erir.",new38:"YENİ: Buz zinciri! Aynı gövdede iki donmuş kuş.",
-  misIce:"{n} donmuş kuşu kurtar",misIce1:"Donmuş kuşu kurtar",misCrow:"Kargayı {n} kez kaçır",misNoWood:"Ağaçkakansız bitir",misDone:"Görev tamam!",lockWeb:"{n} hamle kaldı",lockCrow:"Kargaya dokun!",freed:"Orman sana yardım etti!",
+  misIce:"{n} donmuş kuşu kurtar",misIce1:"Donmuş kuşu kurtar",misCrow:"Kargayı {n} kez kaçır",misNoWood:"Ağaçkakansız bitir",misDone:"Görev tamam!",lockWeb:"{n} hamle kaldı",lockCrow:"Kargayı kaçırmak için 3 kez dokun!",freed:"Orman sana yardım etti!",
   streak:"×{n} seri",stars:"{n} yıldız",sound:"Ses",lang:"Dil",privacy:"Gizlilik",home:"Ana ekran",restartA:"Baştan",
   regions:["Yaşlı Meşe Ormanı","Ay Işığı Gölü","Sisli Dağ","Bulut Tepesi","Yıldız Korusu","Kehribar Vadisi"],
   shouts:["CİK CİK, EFSANE!","KANATLAR ALEV ALDI!","ORMANIN YENİ PATRONU!","TÜYLER DİKEN DİKEN!","BU NE HIZ BÖYLE?!","KUŞLAR SANA HAYRAN!","YUVA USTASI GELDİ!","PIRRR! SIRADAKİ!","AĞAÇLAR ALKIŞLIYOR!","GAGALAR ŞAŞKIN!"],
@@ -490,6 +498,7 @@ function setupObs(lv){const O=obs(lv),r=rand(lv*31337+7),T=S.T,full=T.map((x,i)=
 function misInc(k){if(!S.mis||S.mis.k!==k||S.mis.c>=S.mis.n)return;S.mis.c++;if(S.mis.c>=S.mis.n){toast(t("misDone"));sfx("fan");}paintMis();}
 function misOk(){return !!S.mis&&(S.mis.k==="nowood"?!S.woodUsed:S.mis.c>=S.mis.n);}
 const LOCK='<svg viewBox="0 0 20 22" aria-hidden="true"><path d="M5.5 10V7a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="#5A3A1E" stroke-width="2.4" stroke-linecap="round"/><rect x="2.5" y="9.5" width="15" height="11" rx="3" fill="#C98A3A" stroke="#5A3A1E" stroke-width="1.6"/><circle cx="10" cy="14.4" r="1.7" fill="#5A3A1E"/><path d="M10 15.4v2.4" stroke="#5A3A1E" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const HAND='<svg viewBox="0 0 24 30" aria-hidden="true"><path d="M8.5 3.5a2 2 0 0 1 4 0v9.2l.6-.1V9.8a1.9 1.9 0 0 1 3.8 0v3.4l.6-.1v-1.6a1.9 1.9 0 0 1 3.8 0V19c0 5.2-3.4 9-8.6 9-3.6 0-5.6-1.6-7.6-4.6L1.9 18a2 2 0 0 1 3.2-2.4l3.4 3.4z" fill="#FFF6E6" stroke="#3A2212" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 const MEDAL='<svg viewBox="0 0 20 24" class="medal" aria-hidden="true"><path d="M5 0h4l2 7H7zM11 0h4l-2 7H9z" fill="#E5484D"/><circle cx="10" cy="15" r="7.5" fill="#FFC83A" stroke="#9A5A10" stroke-width="1.4"/><path d="M10 10.4l1.4 2.9 3.2.4-2.3 2.2.6 3.1L10 17.5 7.1 19l.6-3.1-2.3-2.2 3.2-.4z" fill="#FFF3C4"/></svg>';
 function paintMis(){const e=$("g-mis");if(!e)return;if(!S.mis){e.hidden=true;return;}e.hidden=false;const k=S.mis.k,ok=misOk()&&k!=="nowood";
  e.className="mis"+(ok?" ok":"");e.innerHTML=`${MEDAL}<span>${t(k==="ice"?(S.mis.n===1?"misIce1":"misIce"):k==="crow"?"misCrow":"misNoWood",{n:S.mis.n})}</span>${k==="nowood"?"":`<b>${Math.min(S.mis.c,S.mis.n)}/${S.mis.n}</b>`}`;}
@@ -592,7 +601,7 @@ function openGame(){const E=$("game");E.innerHTML=gameHTML();show("game");bindGa
 function trunkHTML(x,i){const full=x.length===CAP&&x.every(y=>y===x[0]),ok=S.sel>=0&&S.sel!==i&&can(S.T,S.sel,i),hv=S.hv[i]||0;
  const pk=S.pick==="wood"&&(i===S.vine||i===S.web||iceTop(i)>=0);
  return `<button type="button" class="tk${S.sel===i?" sel":""}${full?" full":""}${ok?" ok":""}${i===S.vine?" vined":""}${i===S.web?" webbed":""}${i===S.crow?" crowed":""}${pk?" pk":""}" data-t="${i}" aria-label="${t("trunk",{n:i+1})}"><span class="tr"><span class="hol"></span><span class="cap"></span><span class="knot" style="--ky:${18+(i*37)%40}%;--kx:${i%2?62:18}%"></span>${i%3===1?'<span class="leaf"></span>':""}</span>
-  <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice"+(iceAt(i,k)[2]?" thick":"")+(iceAt(i,k)[3]?" crk":""):""}${k===x.length-1&&k>=hv&&!isIce(i,k)?(i===S.crow?" sulk":i===S.vine||i===S.web?" sad":""):""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v">${VINE}</span>`:""}${i===S.web?`<span class="ob-w">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c">${CROW}<em>${"●".repeat(3-S.crowTap)}</em></span>`:""}</button>`;}
+  <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice"+(iceAt(i,k)[2]?" thick":"")+(iceAt(i,k)[3]?" crk":""):""}${k===x.length-1&&k>=hv&&!isIce(i,k)?(i===S.crow?" sulk":i===S.vine||i===S.web?" sad":""):""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v">${VINE}</span>`:""}${i===S.web?`<span class="ob-w">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c${(G.crowN||0)<=3&&!S.crowTap?" hintme":""}">${CROW}<em>${"●".repeat(3-S.crowTap)}</em><span class="hand">${HAND}</span></span>`:""}</button>`;}
 let shownHv=[];
 function paint(){const E=$("tubes");if(!E||!S)return;norm();const A=document.querySelector("#game .acts");if(A&&(!!$("g-wood")!==!!S.wood||!!$("g-hoo")!==!!S.hoo)){const tmp=document.createElement("div");tmp.innerHTML=gameHTML();A.replaceWith(tmp.querySelector(".acts"));bindActs();}const W0=$("game");W0.classList.toggle("nohint",S.lv>3);W0.dataset.reg=String(Math.floor((S.lv-1)/10)%6);
  E.innerHTML=S.T.map(trunkHTML).join("");$("g-un").textContent=S.undo;$("g-pl").textContent=S.plus;$("g-undo").disabled=!S.H.length||!S.undo;$("g-add").disabled=!S.plus;$("g-lv").textContent=S.lv;
@@ -608,7 +617,7 @@ function layout(){const E=$("tubes");if(!E||!S)return;const n=S.T.length,er=E.ge
 /* ---------- interaction ---------- */
 function tap(i){if(BUSY||S.won)return;ac();
  if(S.pick==="wood"){S.pick=0;if(i===S.vine||i===S.web||iceTop(i)>=0){S.wood--;S.used++;S.woodUsed=1;peck(i);}else paint();return;}
- if(i===S.crow){S.crowTap++;sfx("caw");const c=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(S.crowTap>=3){crowLeave();}else{paint();const c2=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(c2)c2.classList.add("flap");}persist();return;}
+ if(i===S.crow){S.crowTap++;sfx("caw");{const ce=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(ce){const r=ce.getBoundingClientRect();FXC.burst(r.left+r.width/2,r.top+r.height/2,["#555C86","#8C95C4","#363A5A"],8+S.crowTap*4,{sp:4,up:2,sz:4});}}const c=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(S.crowTap>=3){crowLeave();}else{paint();const c2=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(c2)c2.classList.add("flap");}persist();return;}
  if(locked(i)){sfx("bad");const el=document.querySelector(`.tk[data-t="${i}"]`);if(el){el.classList.remove("nope");void el.offsetWidth;el.classList.add("nope");}toast(i===S.vine?t("lockVine"):t("lockWeb",{n:S.webN}));if(S.sel>=0)mood([topB(S.sel)],"grr",900);return;}
  if(S.sel<0&&S.T[i].length&&iceTop(i)===S.T[i].length-1){iceTap(i);return;}
  if(S.sel<0){if(!S.T[i].length)return;S.sel=i;sfx("sel");paint();owl("look");return;}
@@ -648,7 +657,7 @@ function crackIce(i,k){S.ice=S.ice.filter(([tt,kk])=>!(tt===i&&kk===k));sfx("cra
 function vineGo(){const i=S.vine;S.vine=-1;sfx("snap");fxAt(i,["#6CC24A","#3E8A32","#B8E986"]);toast(t("vineGone"));paint();mood([topB(i)],"joy",1200);persist();}
 function webSnap(){const i=S.web;S.web=-1;sfx("snap");fxAt(i,["#F0F8FF","#D6E4F0"]);toast(t("webGone"));paint();mood([topB(i)],"joy",1200);persist();}
 function crowCome(){const c=S.T.map((x,i)=>i).filter(i=>S.T[i].length&&!locked(i)&&i!==S.sel&&!(S.T[i].length===CAP&&S.T[i].every(y=>y===S.T[i][0])));if(!c.length){S.crowIn=2;return;}
- S.crow=c[Math.floor(Math.random()*c.length)];S.crowTap=0;sfx("caw");paint();const e=document.querySelector(`.tk[data-t="${S.crow}"] .ob-c`);if(e)e.classList.add("arrive");mood([topB(S.crow)],"oh",1200);}
+ S.crow=c[Math.floor(Math.random()*c.length)];S.crowTap=0;sfx("caw");G.crowN=(G.crowN||0)+1;save();if(G.crowN<=3)setTimeout(()=>toast(t("lockCrow")),700);paint();const e=document.querySelector(`.tk[data-t="${S.crow}"] .ob-c`);if(e)e.classList.add("arrive");mood([topB(S.crow)],"oh",1200);}
 function crowLeave(silent){const i=S.crow;if(i<0)return;if(!silent)misInc("crow");const e=document.querySelector(`.tk[data-t="${i}"] .ob-c`);S.crow=-1;S.crowTap=0;S.crowIn=6;sfx("caw");toast(t("crowGone"));
  if(e){const r=e.getBoundingClientRect(),c=e.cloneNode(true);c.className="ob-c gone";c.style.cssText=`position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;z-index:60`;document.body.appendChild(c);setTimeout(()=>c.remove(),900);FXC.burst(r.left+r.width/2,r.top+r.height/2,["#2E2D3C","#3C3A52","#6B5FA0"],14,{sp:5,up:3,sz:4});}
  paint();mood([topB(i)],"joy",1200);persist();}
