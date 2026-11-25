@@ -66,7 +66,7 @@ button:disabled{cursor:default}
 /* ---------- canopy, owl, squirrel ---------- */
 .canopy{position:absolute;left:0;right:0;top:env(safe-area-inset-top);height:176px;z-index:1;pointer-events:none}
 .cvs{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45))}
-.owl{position:absolute;left:calc(50% + 72px);top:4px;width:50px;height:58px;transform-origin:50% 90%;filter:drop-shadow(0 4px 4px rgba(0,0,0,.45))}
+.owl{position:absolute;z-index:2;left:calc(50% + 72px);top:4px;width:50px;height:58px;transform-origin:50% 90%;filter:drop-shadow(0 4px 4px rgba(0,0,0,.45))}
 .owl svg{width:100%;height:100%;overflow:visible}
 .owl .oe{transform-origin:25px 21px;animation:ob 6s infinite}@keyframes ob{0%,92%,100%{transform:none}95%{transform:scaleY(.08)}}
 .owl .op{transition:transform .3s}.owl.look .op{transform:translate(-1.4px,2px)}
@@ -75,8 +75,8 @@ button:disabled{cursor:default}
 .owl.cheer .ow-l,.owl.spin .ow-l{animation:owL .16s ease-in-out 6 alternate}.owl.cheer .ow-r,.owl.spin .ow-r{animation:owR .16s ease-in-out 6 alternate}
 @keyframes owL{to{transform:rotate(40deg)}}@keyframes owR{to{transform:rotate(-40deg)}}
 .owl.spin{animation:os .9s cubic-bezier(.3,1.3,.5,1)}@keyframes os{40%{transform:translateY(-14px) rotate(180deg)}80%{transform:translateY(-4px) rotate(360deg)}100%{transform:rotate(360deg)}}
-.sq{position:absolute;left:-70px;top:12px;width:64px;height:48px;z-index:1;opacity:0;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}.sq svg{width:100%;height:100%}
-.sq.run{animation:sq 13s ease-in-out forwards}
+.sq{position:absolute;left:0;top:0;width:64px;height:48px;z-index:1;opacity:0;transform-origin:50% 90%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}.sq svg{width:100%;height:100%}
+
 @keyframes sq{0%{opacity:1;transform:translate(0,0)}22%{transform:translate(150px,30px)}28%{transform:translate(150px,24px)}34%{transform:translate(150px,30px)}60%{transform:translate(150px,30px) scaleX(1)}64%{transform:translate(150px,30px) scaleX(-1)}68%{transform:translate(150px,30px) scaleX(1)}99%{opacity:1}100%{opacity:0;transform:translate(calc(100vw + 40px),6px)}}
 .sq.run .sq-tail{transform-origin:16px 40px;animation:tail .45s ease-in-out 28 alternate}@keyframes tail{to{transform:rotate(-12deg)}}
 
@@ -569,7 +569,16 @@ const IC={snd:'<svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"
  map:'<svg viewBox="0 0 24 24"><path d="M3.5 6.5l5-2 7 2.5 5-2v13l-5 2-7-2.5-5 2z M8.5 4.5v13 M15.5 7v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'};
 let owlT=0;
 function owl(k){const o=document.querySelector("#game .owl");if(!o)return;o.classList.remove("cheer","look","spin");void o.offsetWidth;o.classList.add(k);clearTimeout(owlT);owlT=setTimeout(()=>o.classList.remove(k),k==="look"?1600:1300);if(k!=="look")sfx("hoot");}
-function squirrel(){const c=document.querySelector("#game .canopy");if(!c||document.hidden)return;let q=c.querySelector(".sq");if(!q){c.insertAdjacentHTML("beforeend",`<div class="sq">${SQ}</div>`);q=c.querySelector(".sq");}q.classList.remove("run");void q.offsetWidth;q.classList.add("run");}
+function branchY(vx){const B=(a,b,c,d,t)=>{const u=1-t;return u*u*u*a+3*u*u*t*b+3*u*t*t*c+t*t*t*d;};const seg=vx<=200?[[-12,14],[70,22],[140,58],[200,62]]:[[200,62],[262,66],[330,48],[414,26]];
+ let lo=0,hi=1;for(let k=0;k<30;k++){const m=(lo+hi)/2;if(B(seg[0][0],seg[1][0],seg[2][0],seg[3][0],m)<vx)lo=m;else hi=m;}const t=(lo+hi)/2;return B(seg[0][1],seg[1][1],seg[2][1],seg[3][1],t);}
+function squirrel(){const c=document.querySelector("#game .canopy");if(!c||document.hidden)return;let q=c.querySelector(".sq");if(!q){c.insertAdjacentHTML("beforeend",`<div class="sq">${SQ}</div>`);q=c.querySelector(".sq");}
+ const W=c.clientWidth,H=c.clientHeight,sx=W/400,sy=H/170,w=64,h=48,pos=px=>{const vx=px/sx,y=branchY(vx)*sy,y2=branchY(vx+4)*sy,ang=Math.atan2(y2-y,4*sx)*180/Math.PI;return {x:px-w/2,y:y-h*.9,a:ang};};
+ const x0=-w,x1=W*.36,x2=W+w,fr=[];const tf=(p,flip)=>`translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px) rotate(${p.a.toFixed(1)}deg) scaleX(${flip?-1:1})`;
+ const N=14;for(let k=0;k<=N;k++){const px=x0+(x1-x0)*k/N;fr.push({transform:tf(pos(px)),offset:.38*k/N});}
+ const pm=pos(x1);fr.push({transform:tf(pm,1),offset:.47},{transform:tf(pm,1),offset:.52},{transform:tf(pm),offset:.58});
+ for(let k=1;k<=N;k++){const px=x1+(x2-x1)*k/N;fr.push({transform:tf(pos(px)),offset:.6+.4*k/N});}
+ q.classList.add("run");q.style.opacity=1;try{q.getAnimations().forEach(a=>a.cancel());}catch(e){}
+ const an=q.animate(fr,{duration:13000,easing:"linear",fill:"forwards"});an.onfinish=()=>{q.style.opacity=0;q.classList.remove("run");};}
 let sqT=0;function sqLoop(){clearTimeout(sqT);sqT=setTimeout(()=>{if(SCREEN==="game")squirrel();sqLoop();},14000+Math.random()*22000);}
 
 /* ---------- screens ---------- */
