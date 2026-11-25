@@ -318,6 +318,10 @@ button:disabled{cursor:default}
 @keyframes ring{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.5);opacity:0}}
 .ob-c em{font-size:calc(var(--w)*.24)!important;letter-spacing:3px!important;text-shadow:0 0 6px rgba(255,200,80,.8),0 2px 0 #2A1406!important}
 
+.fly-owl{transform-origin:50% 50%;filter:drop-shadow(0 8px 10px rgba(0,0,0,.5))}
+.fly-owl .ow-l{animation:owL .12s ease-in-out infinite alternate}.fly-owl .ow-r{animation:owR .12s ease-in-out infinite alternate}
+.fly-owl.hooting .oe{transform:scale(1.15)}
+
 </style>
 </head>
 <body>
@@ -337,11 +341,11 @@ const I18N={
   master:"MASTER LEVEL",bossSub:"These birds are stubborn. Show them!",newRegion:"NEW REGION UNLOCKED",welcome:"Welcome to {r}",
   chipColors:"{n} bird colors",chipTrunks:"{n} trunks",chipSleepy:"Sleepy birds",chipOne:"One empty trunk",chipTall:"Tall trunks",
   new11:"NEW: Sleepy birds wake up when the birds above them fly away.",new25:"NEW: Only one empty trunk. Think before you move!",new33:"NEW: Taller trunks — 5 birds fit in each nest.",
-  new7:"NEW: Frozen birds! Tap a frozen bird to crack the ice.",new15:"NEW: A sneaky crow! Tap it 3 times to shoo it, or call the owl.",new21:"NEW: Vines lock a trunk until you complete a nest.",new28:"NEW: Spider webs block a trunk for a few moves.",
+  new7:"NEW: Frozen birds! Tap a frozen bird to crack the ice.",new15:"NEW: A sneaky crow! Tap it and the owl will chase it off.",new21:"NEW: Vines lock a trunk until you complete a nest.",new28:"NEW: Spider webs block a trunk for a few moves.",
   chipIce:"Frozen birds",chipCrow:"Sneaky crow",chipVine:"Vines",chipWeb:"Spider web",wood:"Woodpecker",owlB:"Owl",
   pickT:"Tap a trunk to peck it free",crowGone:"Shoo, crow!",vineGone:"The vine let go!",webGone:"The web snapped!",iceGone:"Crack!",
   lockVine:"Complete a nest to free it",iceThick:"Thick ice! Bring a bird of the same color.",iceThaw:"Warmed up!",new18:"NEW: Thick ice only melts when a bird of the same color lands on it.",new38:"NEW: Ice chains — two frozen birds in one trunk!",
-  misIce:"Free {n} frozen birds",misIce1:"Free the frozen bird",misCrow:"Shoo the crow {n} times",misNoWood:"Win without the woodpecker",misDone:"Mission complete!",lockWeb:"{n} more moves",lockCrow:"Tap the crow 3 times to shoo it!",freed:"The forest helped you!",
+  misIce:"Free {n} frozen birds",misIce1:"Free the frozen bird",misCrow:"Shoo the crow {n} times",misNoWood:"Win without the woodpecker",misDone:"Mission complete!",lockWeb:"{n} more moves",lockCrow:"Tap the crow — the owl will chase it off!",freed:"The forest helped you!",
   streak:"×{n} streak",stars:"{n} stars",sound:"Sound",lang:"Language",privacy:"Privacy",home:"Home",restartA:"Restart",
   regions:["Old Oak Forest","Moonlight Lake","Misty Mountain","Cloud Hill","Starry Grove","Amber Valley"],
   shouts:["TWEET-TASTIC!","WINGS ON FIRE!","BOSS OF THE FOREST!","FEATHERS UP!","WHAT A SPEED!","THE BIRDS ADORE YOU!","NEST MASTER!","WHOOSH! NEXT!","THE TREES APPLAUD!","BEAKS DROPPED!"],
@@ -355,11 +359,11 @@ const I18N={
   master:"USTA BÖLÜMÜ",bossSub:"Kuşlar bu sefer inatçı. Göster kendini!",newRegion:"YENİ BÖLGE AÇILDI",welcome:"Hoş geldin: {r}",
   chipColors:"{n} renk kuş",chipTrunks:"{n} gövde",chipSleepy:"Uyuyan kuşlar",chipOne:"Tek boş gövde",chipTall:"5'li gövde",
   new11:"YENİ: Uyuyan kuşlar, üstlerindeki kuşlar uçunca uyanır.",new25:"YENİ: Tek boş gövde var. Her hamleyi düşün!",new33:"YENİ: Gövdeler uzadı, her yuvaya 5 kuş sığıyor.",
-  new7:"YENİ: Donmuş kuşlar! Buzu kırmak için kuşa dokun.",new15:"YENİ: Kurnaz karga! Kaçırmak için 3 kez dokun ya da baykuşu çağır.",new21:"YENİ: Sarmaşık bir gövdeyi kilitler, bir yuva tamamlayınca çözülür.",new28:"YENİ: Örümcek ağı bir gövdeyi birkaç hamle kapatır.",
+  new7:"YENİ: Donmuş kuşlar! Buzu kırmak için kuşa dokun.",new15:"YENİ: Kurnaz karga! Dokun, baykuş gelip kovsun.",new21:"YENİ: Sarmaşık bir gövdeyi kilitler, bir yuva tamamlayınca çözülür.",new28:"YENİ: Örümcek ağı bir gövdeyi birkaç hamle kapatır.",
   chipIce:"Donmuş kuşlar",chipCrow:"Kurnaz karga",chipVine:"Sarmaşık",chipWeb:"Örümcek ağı",wood:"Ağaçkakan",owlB:"Baykuş",
   pickT:"Gagalanacak gövdeye dokun",crowGone:"Kış, karga!",vineGone:"Sarmaşık çözüldü!",webGone:"Ağ koptu!",iceGone:"Çatırt!",
   lockVine:"Çözmek için bir yuva tamamla",iceThick:"Kalın buz! Aynı renkten bir kuş getir.",iceThaw:"Isındı, çözüldü!",new18:"YENİ: Kalın buz, üstüne aynı renk kuş konunca erir.",new38:"YENİ: Buz zinciri! Aynı gövdede iki donmuş kuş.",
-  misIce:"{n} donmuş kuşu kurtar",misIce1:"Donmuş kuşu kurtar",misCrow:"Kargayı {n} kez kaçır",misNoWood:"Ağaçkakansız bitir",misDone:"Görev tamam!",lockWeb:"{n} hamle kaldı",lockCrow:"Kargayı kaçırmak için 3 kez dokun!",freed:"Orman sana yardım etti!",
+  misIce:"{n} donmuş kuşu kurtar",misIce1:"Donmuş kuşu kurtar",misCrow:"Kargayı {n} kez kaçır",misNoWood:"Ağaçkakansız bitir",misDone:"Görev tamam!",lockWeb:"{n} hamle kaldı",lockCrow:"Kargaya dokun, baykuş kovsun!",freed:"Orman sana yardım etti!",
   streak:"×{n} seri",stars:"{n} yıldız",sound:"Ses",lang:"Dil",privacy:"Gizlilik",home:"Ana ekran",restartA:"Baştan",
   regions:["Yaşlı Meşe Ormanı","Ay Işığı Gölü","Sisli Dağ","Bulut Tepesi","Yıldız Korusu","Kehribar Vadisi"],
   shouts:["CİK CİK, EFSANE!","KANATLAR ALEV ALDI!","ORMANIN YENİ PATRONU!","TÜYLER DİKEN DİKEN!","BU NE HIZ BÖYLE?!","KUŞLAR SANA HAYRAN!","YUVA USTASI GELDİ!","PIRRR! SIRADAKİ!","AĞAÇLAR ALKIŞLIYOR!","GAGALAR ŞAŞKIN!"],
@@ -494,7 +498,7 @@ function setupObs(lv){const O=obs(lv),r=rand(lv*31337+7),T=S.T,full=T.map((x,i)=
    if(tier===1){const k=L-1-(S.hv[t]>=L-1||r()<.5?0:1);S.ice.push([t,Math.max(S.hv[t]||0,k),0,0]);}
    else{S.ice.push([t,L-2,1,0]);if(tier===3&&j===0&&L>=3)S.ice.push([t,L-3,1,0]);}}}
  if(O.crow)S.crowIn=3;
- S.wood=(O.vine||O.web||O.ice)?2:0;S.hoo=O.crow?1:0;
+ S.wood=(O.vine||O.web||O.ice)?2:0;S.hoo=0;
  S.mis=S.ice.length?{k:"ice",n:S.ice.length,c:0}:O.crow?{k:"crow",n:2,c:0}:(O.vine||O.web)?{k:"nowood",n:1,c:0}:null;S.woodUsed=0;}
 function misInc(k){if(!S.mis||S.mis.k!==k||S.mis.c>=S.mis.n)return;S.mis.c++;if(S.mis.c>=S.mis.n){toast(t("misDone"));sfx("fan");}paintMis();}
 function misOk(){return !!S.mis&&(S.mis.k==="nowood"?!S.woodUsed:S.mis.c>=S.mis.n);}
@@ -526,7 +530,7 @@ const lvMax=()=>+G.lv||1;
 function startLevel(lv){const {T,C}=make(lv);S={lv,T,H:[],undo:3,plus:1,used:0,mv:0,sel:-1,won:0,cap:CAP,cfg:{nc:C.nc,emp:C.emp,cap:C.cap,hid:C.hid,kind:C.kind},hv:C.hid?T.map(x=>Math.max(0,x.length-1)):T.map(()=>0)};setupObs(lv);streak=0;persist();}
 function persist(){const o=Object.assign({},S);o.H=S.H.slice(-30);G.cur=o;save();}
 function resume(){const o=G.cur;if(o&&Array.isArray(o.T)&&!o.won){S=Object.assign({},o,{sel:-1,pick:0});CAP=S.cap||4;norm();return true;}return false;}
-function norm(){if(!S)return;if(!S.ice)S.ice=[];["vine","web","crow"].forEach(k=>{if(S[k]==null)S[k]=-1;});S.webN=S.webN||0;S.crowIn=S.crowIn||0;S.crowTap=S.crowTap||0;S.wood=S.wood||0;S.hoo=S.hoo||0;if(S.mis===undefined)S.mis=null;S.hv=S.hv||[];while(S.hv.length<S.T.length)S.hv.push(0);S.T.forEach((x,i)=>{S.hv[i]=Math.min(S.hv[i]||0,Math.max(0,x.length-1));});}
+function norm(){if(!S)return;if(!S.ice)S.ice=[];["vine","web","crow"].forEach(k=>{if(S[k]==null)S[k]=-1;});S.webN=S.webN||0;S.crowIn=S.crowIn||0;S.crowTap=S.crowTap||0;S.wood=S.wood||0;S.hoo=0;if(S.mis===undefined)S.mis=null;S.hv=S.hv||[];while(S.hv.length<S.T.length)S.hv.push(0);S.T.forEach((x,i)=>{S.hv[i]=Math.min(S.hv[i]||0,Math.max(0,x.length-1));});}
 
 /* ---------- scene pieces ---------- */
  const LEAF='<path d="M0 0c2-2 3-5 6-5 0-3 3-5 5-3 1-3 4-3 6-1 2-2 5-1 5 2 3 0 4 3 4 5-1 2-3 3-5 3 0 3-3 4-5 2-1 2-4 3-6 0-2 2-5 1-5-1-3 1-5-1-5-2z"/>';
@@ -575,7 +579,10 @@ function squirrel(){const c=document.querySelector("#game .canopy");if(!c||docum
  const W=c.clientWidth,H=c.clientHeight,sx=W/400,sy=H/170,w=64,h=48,pos=px=>{const vx=px/sx,y=branchY(vx)*sy,y2=branchY(vx+4)*sy,ang=Math.atan2(y2-y,4*sx)*180/Math.PI;return {x:px-w/2,y:y-h*.9,a:ang};};
  const x0=-w,x1=W*.36,x2=W+w,fr=[];const tf=(p,flip)=>`translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px) rotate(${p.a.toFixed(1)}deg) scaleX(${flip?-1:1})`;
  const N=14;for(let k=0;k<=N;k++){const px=x0+(x1-x0)*k/N;fr.push({transform:tf(pos(px)),offset:.38*k/N});}
- const pm=pos(x1);fr.push({transform:tf(pm,1),offset:.47},{transform:tf(pm,1),offset:.52},{transform:tf(pm),offset:.58});
+ const pm=pos(x1),bob=(dy,sc)=>`translate(${pm.x.toFixed(1)}px,${(pm.y+dy).toFixed(1)}px) rotate(${pm.a.toFixed(1)}deg) scale(${sc[0]},${sc[1]})`;
+ fr.push({transform:bob(2,[1.06,.92]),offset:.41},{transform:bob(-5,[.96,1.06]),offset:.44},{transform:bob(0,[1,1]),offset:.46});
+ for(let k=0;k<6;k++)fr.push({transform:bob(k%2?0:1.5,[1,k%2?1:.97]),offset:.48+k*.017});
+ fr.push({transform:bob(0,[1,1]),offset:.58});
  for(let k=1;k<=N;k++){const px=x1+(x2-x1)*k/N;fr.push({transform:tf(pos(px)),offset:.6+.4*k/N});}
  q.classList.add("run");q.style.opacity=1;try{q.getAnimations().forEach(a=>a.cancel());}catch(e){}
  const an=q.animate(fr,{duration:13000,easing:"linear",fill:"forwards"});an.onfinish=()=>{q.style.opacity=0;q.classList.remove("run");};}
@@ -611,7 +618,7 @@ function openGame(){const E=$("game");E.innerHTML=gameHTML();show("game");bindGa
 function trunkHTML(x,i){const full=x.length===CAP&&x.every(y=>y===x[0]),ok=S.sel>=0&&S.sel!==i&&can(S.T,S.sel,i),hv=S.hv[i]||0;
  const pk=S.pick==="wood"&&(i===S.vine||i===S.web||iceTop(i)>=0);
  return `<button type="button" class="tk${S.sel===i?" sel":""}${full?" full":""}${ok?" ok":""}${i===S.vine?" vined":""}${i===S.web?" webbed":""}${i===S.crow?" crowed":""}${pk?" pk":""}" data-t="${i}" aria-label="${t("trunk",{n:i+1})}"><span class="tr"><span class="hol"></span><span class="cap"></span><span class="knot" style="--ky:${18+(i*37)%40}%;--kx:${i%2?62:18}%"></span>${i%3===1?'<span class="leaf"></span>':""}</span>
-  <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice"+(iceAt(i,k)[2]?" thick":"")+(iceAt(i,k)[3]?" crk":""):""}${k===x.length-1&&k>=hv&&!isIce(i,k)?(i===S.crow?" sulk":i===S.vine||i===S.web?" sad":""):""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v">${VINE}</span>`:""}${i===S.web?`<span class="ob-w">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c${(G.crowN||0)<=3&&!S.crowTap?" hintme":""}">${CROW}<em>${"●".repeat(3-S.crowTap)}</em><span class="hand">${HAND}</span></span>`:""}</button>`;}
+  <span class="birds">${x.map((c,k)=>`<i class="b${k===x.length-1?" top":""}${k<hv?" zz":""}${isIce(i,k)?" ice"+(iceAt(i,k)[2]?" thick":"")+(iceAt(i,k)[3]?" crk":""):""}${k===x.length-1&&k>=hv&&!isIce(i,k)?(i===S.crow?" sulk":i===S.vine||i===S.web?" sad":""):""}" style="--k:${k};--d:${((k*.37+i*.21)%1.6).toFixed(2)}s">${k<hv?birdZ():bird(c)}</i>`).join("")}</span>${full?'<span class="nest"><i></i><i></i><i></i><i></i><i></i></span>':""}${i===S.vine?`<span class="ob-v">${VINE}</span>`:""}${i===S.web?`<span class="ob-w">${WEB}<em>${S.webN}</em></span>`:""}${i===S.crow?`<span class="ob-c${(G.crowN||0)<=3&&!S.crowTap?" hintme":""}">${CROW}<span class="hand">${HAND}</span></span>`:""}</button>`;}
 let shownHv=[];
 function paint(){const E=$("tubes");if(!E||!S)return;norm();const A=document.querySelector("#game .acts");if(A&&(!!$("g-wood")!==!!S.wood||!!$("g-hoo")!==!!S.hoo)){const tmp=document.createElement("div");tmp.innerHTML=gameHTML();A.replaceWith(tmp.querySelector(".acts"));bindActs();}const W0=$("game");W0.classList.toggle("nohint",S.lv>3);W0.dataset.reg=String(Math.floor((S.lv-1)/10)%6);
  E.innerHTML=S.T.map(trunkHTML).join("");$("g-un").textContent=S.undo;$("g-pl").textContent=S.plus;$("g-undo").disabled=!S.H.length||!S.undo;$("g-add").disabled=!S.plus;$("g-lv").textContent=S.lv;
@@ -627,7 +634,7 @@ function layout(){const E=$("tubes");if(!E||!S)return;const n=S.T.length,er=E.ge
 /* ---------- interaction ---------- */
 function tap(i){if(BUSY||S.won)return;ac();
  if(S.pick==="wood"){S.pick=0;if(i===S.vine||i===S.web||iceTop(i)>=0){S.wood--;S.used++;S.woodUsed=1;peck(i);}else paint();return;}
- if(i===S.crow){S.crowTap++;sfx("caw");{const ce=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(ce){const r=ce.getBoundingClientRect();FXC.burst(r.left+r.width/2,r.top+r.height/2,["#555C86","#8C95C4","#363A5A"],8+S.crowTap*4,{sp:4,up:2,sz:4});}}const c=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(S.crowTap>=3){crowLeave();}else{paint();const c2=document.querySelector(`.tk[data-t="${i}"] .ob-c`);if(c2)c2.classList.add("flap");}persist();return;}
+ if(i===S.crow){owlSwoop(i);return;}
  if(locked(i)){sfx("bad");const el=document.querySelector(`.tk[data-t="${i}"]`);if(el){el.classList.remove("nope");void el.offsetWidth;el.classList.add("nope");}toast(i===S.vine?t("lockVine"):t("lockWeb",{n:S.webN}));if(S.sel>=0)mood([topB(S.sel)],"grr",900);return;}
  if(S.sel<0&&S.T[i].length&&iceTop(i)===S.T[i].length-1){iceTap(i);return;}
  if(S.sel<0){if(!S.T[i].length)return;S.sel=i;sfx("sel");paint();owl("look");return;}
@@ -668,7 +675,15 @@ function vineGo(){const i=S.vine;S.vine=-1;sfx("snap");fxAt(i,["#6CC24A","#3E8A3
 function webSnap(){const i=S.web;S.web=-1;sfx("snap");fxAt(i,["#F0F8FF","#D6E4F0"]);toast(t("webGone"));paint();mood([topB(i)],"joy",1200);persist();}
 function crowCome(){const c=S.T.map((x,i)=>i).filter(i=>S.T[i].length&&!locked(i)&&i!==S.sel&&!(S.T[i].length===CAP&&S.T[i].every(y=>y===S.T[i][0])));if(!c.length){S.crowIn=2;return;}
  S.crow=c[Math.floor(Math.random()*c.length)];S.crowTap=0;sfx("caw");G.crowN=(G.crowN||0)+1;save();if(G.crowN<=3)setTimeout(()=>toast(t("lockCrow")),700);paint();const e=document.querySelector(`.tk[data-t="${S.crow}"] .ob-c`);if(e)e.classList.add("arrive");mood([topB(S.crow)],"oh",1200);}
-function crowLeave(silent){const i=S.crow;if(i<0)return;if(!silent)misInc("crow");const e=document.querySelector(`.tk[data-t="${i}"] .ob-c`);S.crow=-1;S.crowTap=0;S.crowIn=6;sfx("caw");toast(t("crowGone"));
+function owlSwoop(i){const ce=document.querySelector(`.tk[data-t="${i}"] .ob-c`),ow=document.querySelector("#game .owl");if(!ce||!ow){crowLeave();return;}
+ BUSY=true;const a=ow.getBoundingClientRect(),c=ce.getBoundingClientRect(),f=document.createElement("div");f.className="owl fly-owl";f.innerHTML=OWL;
+ f.style.cssText=`position:fixed;left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;margin:0;z-index:70`;document.body.appendChild(f);ow.style.visibility="hidden";
+ const tx=c.left+c.width*.5-a.width/2-a.left-c.width*.55,ty=c.top-a.top-a.height*.35,dir=tx<0?-1:1;sfx("hoot");
+ f.animate([{transform:"none"},{transform:`translate(${tx*.5}px,${ty*.5-40}px) rotate(${dir*10}deg) scale(1.25)`,offset:.5},{transform:`translate(${tx}px,${ty}px) rotate(${dir*-6}deg) scale(1.35)`}],{duration:520,easing:"cubic-bezier(.45,0,.3,1)",fill:"forwards"});
+ setTimeout(()=>{sfx("hoot");crowLeave();BUSY=true;f.classList.add("hooting");
+  setTimeout(()=>{const back=f.animate([{transform:`translate(${tx}px,${ty}px) scale(1.35)`},{transform:`translate(${tx*.5}px,${ty*.5-50}px) scale(1.2)`,offset:.5},{transform:"none"}],{duration:620,easing:"cubic-bezier(.45,0,.3,1)",fill:"forwards"});
+   back.onfinish=()=>{f.remove();ow.style.visibility="";BUSY=false;owl("cheer");};},380);},540);}
+function crowLeave(silent){const i=S.crow;if(i<0)return;if(!silent)misInc("crow");const e=document.querySelector(`.tk[data-t="${i}"] .ob-c`);S.crow=-1;S.crowTap=0;S.crowIn=4;sfx("caw");toast(t("crowGone"));
  if(e){const r=e.getBoundingClientRect(),c=e.cloneNode(true);c.className="ob-c gone";c.style.cssText=`position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;z-index:60`;document.body.appendChild(c);setTimeout(()=>c.remove(),900);FXC.burst(r.left+r.width/2,r.top+r.height/2,["#2E2D3C","#3C3A52","#6B5FA0"],14,{sp:5,up:3,sz:4});}
  paint();mood([topB(i)],"joy",1200);persist();}
 function peck(i){BUSY=true;const el=document.querySelector(`.tk[data-t="${i}"]`);if(el)el.classList.add("pecking");sfx("peck");owl("cheer");
