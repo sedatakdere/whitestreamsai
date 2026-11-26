@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.whitestreamsai.hoothollow",
+    "sha256_cert_fingerprints": [
+      "C7:25:04:08:7A:22:E4:F2:F6:B2:37:C6:88:B9:E1:11:11:2C:0D:6B:62:CA:46:31:0C:8A:E9:50:45:18:B3:06"
+    ]
+  }
+}]
