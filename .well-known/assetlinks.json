@@ -1,11 +1,16 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.whitestreamsai.hoothollow",
-    "sha256_cert_fingerprints": [
-      "27:73:5B:7F:8A:45:91:51:4D:ED:64:E1:55:EF:7B:44:65:6F:18:10:06:A3:6B:77:EB:4F:CE:DC:46:07:A2:F5",
-      "C7:25:04:08:7A:22:E4:F2:F6:B2:37:C6:88:B9:E1:11:11:2C:0D:6B:62:CA:46:31:0C:8A:E9:50:45:18:B3:06"
-    ]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.whitestreamsai.hoothollow",
+      "sha256_cert_fingerprints": [
+        "27:73:5B:7F:8A:45:91:51:4D:ED:64:E1:55:EF:7B:44:65:6F:18:10:06:A3:6B:77:EB:4F:CE:DC:46:07:A2:F5",
+        "C7:25:04:08:7A:22:E4:F2:F6:B2:37:C6:88:B9:E1:11:11:2C:0D:6B:62:CA:46:31:0C:8A:E9:50:45:18:B3:06",
+        "EA:1C:F1:BE:8C:E7:82:7A:76:60:91:A2:D5:3D:5E:3F:21:94:B8:75:4E:42:96:E2:F4:10:92:F3:48:6A:47:8A"
+      ]
+    }
   }
-}]
+]
